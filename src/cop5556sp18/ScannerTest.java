@@ -193,17 +193,167 @@ public class ScannerTest {
 	
 	@Test
 	public void testSq() throws LexicalException {
-		String input = "000";
+		String input = "00.0099889";
 		Scanner scanner = new Scanner(input).scan();
 		show(input);
 		show(scanner);
 		checkNext(scanner, INTEGER_LITERAL, 0, 1, 1, 1);
-		checkNext(scanner, INTEGER_LITERAL, 1, 1, 1, 2);
+		checkNext(scanner, FLOAT_LITERAL, 9);
 //		checkNext(scanner, INTEGER_LITERAL, 2, 1, 2, 1);
 //		checkNext(scanner, INTEGER_LITERAL, 3, 1, 2, 2);
 //		checkNextIsEOF(scanner);
 	}
 
+//	@Test
+//	public void testComments() throws LexicalException {
+//		String input = "/****//*123*//**//*132142134324fa&**%%%%dsf8*****";
+//		show(input);
+//		thrown.expect(LexicalException.class);  //Tell JUnit to expect a LexicalException
+//		try {
+//			Scanner scanner = new Scanner(input).scan();
+//			show(scanner);
+//		} catch (LexicalException e) {  //Catch the exception
+//			show(e);                    //Display it
+//			throw e;                    //Rethrow exception so JUnit will see it
+//		}
+//	}
+	
+	@Test
+	public void testSeperator() throws LexicalException {
+		String input = "()\n[]\n;\n,\n{}\n<<\n>>\n.";
+		Scanner scanner = new Scanner(input).scan();
+		show(input);
+		show(scanner);
+		checkNext(scanner, LPAREN, 0, 1, 1, 1);
+		checkNext(scanner, RPAREN, 1, 1, 1, 2);
+		checkNext(scanner, LSQUARE, 3, 1, 2, 1);
+		checkNext(scanner, RSQUARE, 4, 1, 2, 2);
+		checkNext(scanner, SEMI, 6, 1, 3, 1);
+		checkNext(scanner, COMMA, 8, 1, 4, 1);
+		checkNext(scanner, LBRACE, 10, 1, 5, 1);
+		checkNext(scanner, RBRACE, 11, 1, 5, 2);
+		checkNext(scanner, LPIXEL, 13, 2, 6, 1);
+		checkNext(scanner, RPIXEL, 16, 2, 7, 1);
+		checkNext(scanner, DOT, 19, 1, 8, 1);
+		checkNextIsEOF(scanner);
+	}
+	
+	@Test 
+	public void testKeyword() throws LexicalException {
+		String input = "Z default_width default_height show write to"
+				+ " input from cart_x cart_y polar_a polar_r "
+				+ "abs sin cos atan log image int float filename boolean red "
+				+ "blue green alpha while if width height";
+		Scanner scanner = new Scanner(input).scan();
+		show(input);
+		show(scanner);
+		checkNext(scanner, KW_Z, 1);
+		checkNext(scanner, KW_default_width, 13);
+		checkNext(scanner, KW_default_height, 14);
+		checkNext(scanner, KW_show, 4);
+		checkNext(scanner, KW_write, 5);
+		checkNext(scanner, KW_to, 2);
+		checkNext(scanner, KW_input, 5);
+		checkNext(scanner, KW_from, 4);
+		checkNext(scanner, KW_cart_x, 6);
+		checkNext(scanner, KW_cart_y, 6);
+		checkNext(scanner, KW_polar_a, 7);
+		checkNext(scanner, KW_polar_r, 7);
+		checkNext(scanner, KW_abs, 3);
+		checkNext(scanner, KW_sin, 3);
+		checkNext(scanner, KW_cos, 3);
+		checkNext(scanner, KW_atan, 4);
+		checkNext(scanner, KW_log, 3);
+		checkNext(scanner, KW_image, 5);
+		checkNext(scanner, KW_int, 3);
+		checkNext(scanner, KW_float, 5);
+		checkNext(scanner, KW_filename, 8);
+		checkNext(scanner, KW_boolean, 7);
+		checkNext(scanner, KW_red, 3);
+		checkNext(scanner, KW_blue, 4);
+		checkNext(scanner, KW_green, 5);
+		checkNext(scanner, KW_alpha, 5);
+		checkNext(scanner, KW_while, 5);
+		checkNext(scanner, KW_if, 2);
+		checkNext(scanner, KW_width, 5);
+		checkNext(scanner, KW_height, 6);
+		checkNextIsEOF(scanner);
+	}
+	
+	@Test 
+	public void testNumber() throws LexicalException {
+		String input = "9.";
+		Scanner scanner = new Scanner(input).scan();
+		show(input);
+		show(scanner);
+		checkNext(scanner, FLOAT_LITERAL, 2);
+	}
+	
+	@Test 
+	public void testTrick() throws LexicalException {
+		String input1 = "***";
+		String input2 = "true\nfalse";
+		Scanner scanner1 = new Scanner(input1).scan();
+		Scanner scanner2 = new Scanner(input2).scan();
+		show(input1);
+		show(scanner1);
+		show(input2);
+		show(scanner2);
+		checkNext(scanner1, OP_POWER, 2);
+		checkNext(scanner2, BOOLEAN_LITERAL, 4);
+	}
+	
+	@Test
+	public void testEqual() throws LexicalException {
+		String input = "=";
+		show(input);
+		thrown.expect(LexicalException.class);  //Tell JUnit to expect a LexicalException
+		try {
+			Scanner scanner = new Scanner(input).scan();
+			show(scanner);
+		} catch (LexicalException e) {  //Catch the exception
+			show(e);                    //Display it
+			throw e;                    //Rethrow exception so JUnit will see it
+		}
+	}
+	
+	@Test
+	public void testOperator() throws LexicalException {
+		String input = "> < ! ? : == != <= >= & | + - * / % ** := @";
+		Scanner scanner = new Scanner(input).scan();
+		show(input);
+		show(scanner);
+	}
+	
+	@Test 
+	public void testrandom() throws LexicalException {
+		String input = "fadsfasdgadgdj234roiefsdn oir23y8ifuejsku;yglsuvdb";
+		Scanner scanner = new Scanner(input).scan();
+		show(input);
+		show(scanner);
+		checkNext(scanner, IDENTIFIER, 25);
+		checkNext(scanner, IDENTIFIER, 15);
+		checkNext(scanner, SEMI, 1);
+		checkNext(scanner, IDENTIFIER, 8);
+	}
+	
+	@Test
+	public void testIdentifier() throws LexicalException {
+		String input = "a_fdasf$";
+		Scanner scanner = new Scanner(input).scan();
+		show(input);
+		show(scanner);
+		checkNext(scanner, IDENTIFIER, 8);
+	}
+	
+	@Test
+	public void testLen() throws LexicalException {
+		String input = "<=";
+		Scanner scanner = new Scanner(input).scan();
+		show(input);
+		show(scanner);
+		checkNext(scanner, OP_LE, 2);
+	}
 	
 }
 	

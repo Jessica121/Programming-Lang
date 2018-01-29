@@ -389,7 +389,7 @@ public class Scanner {
 						}
 						break;
 						case '0': {
-							if (pos + 1 < chars.length - 1) {
+							if (pos < chars.length - 1) {
 								state = State.HAVE_ZERO;
 							} else {
 								tokens.add(new Token(Kind.INTEGER_LITERAL, startPos, pos - startPos + 1));
@@ -399,18 +399,17 @@ public class Scanner {
 						}
 						break;
 						case '.': {
-							if (pos + 1 < chars.length - 1) {
+							if (pos > 0 && pos < chars.length - 1 && Character.isDigit(chars[pos - 1])) {
 								state = State.HAVE_DOT;
-								pos++;
 							} else {
 								tokens.add(new Token(Kind.DOT, startPos, pos - startPos + 1));
 								state = State.START;
-								pos++;
 							}
+							pos++;
 						}
 						break;
 						case '/':
-							if (pos + 1 < chars.length - 1) {
+							if (pos < chars.length - 1) {
 								state = State.HAVE_SLASH;
 							} else {
 								tokens.add(new Token(Kind.OP_DIV, startPos, pos - startPos + 1));
@@ -419,7 +418,7 @@ public class Scanner {
 							pos++;
 						break;
 						case '!':
-							if (pos + 1 < chars.length - 1) {
+							if (pos < chars.length - 1) {
 								state = State.HAVE_EXCLAM;
 							} else {
 								tokens.add(new Token(Kind.OP_EXCLAMATION, startPos, pos - startPos + 1));
@@ -428,7 +427,7 @@ public class Scanner {
 							pos++;
 						break;
 						case ':':
-							if (pos + 1 < chars.length - 1) {
+							if (pos < chars.length - 1) {
 								state = State.HAVE_COLON;
 							} else {
 								tokens.add(new Token(Kind.OP_COLON, startPos, pos - startPos + 1));
@@ -437,7 +436,7 @@ public class Scanner {
 							pos++;
 						break;
 						case '*': {
-							if (pos + 1 < chars.length - 1) {
+							if (pos < chars.length - 1) {
 								state = State.HAVE_STAR;
 							} else {
 								tokens.add(new Token(Kind.OP_TIMES, startPos, pos - startPos + 1));
@@ -447,7 +446,7 @@ public class Scanner {
 						}
 						break;
 						case '<': {
-							if (pos + 1 < chars.length - 1) {
+							if (pos < chars.length - 1) {
 								state = State.HAVE_LESSER;
 							} else {
 								tokens.add(new Token(Kind.OP_LT, startPos, pos - startPos + 1));
@@ -457,7 +456,7 @@ public class Scanner {
 						}
 						break;
 						case '>': {
-							if (pos + 1 < chars.length - 1) {
+							if (pos < chars.length - 1) {
 								state = State.HAVE_GREATER;
 							} else {
 								tokens.add(new Token(Kind.OP_GT, startPos, pos - startPos + 1));
@@ -467,17 +466,17 @@ public class Scanner {
 						}
 						break;
 						case '=': {
-							if (pos + 1 < chars.length - 1) {
+							if (pos < chars.length - 1) {
 								state = State.HAVE_EQUAL;
 								pos++;
 							} else {
-								error(pos, line(pos), posInLine(pos), "Illegal single equal sign (=)");
+								error(pos, line(pos), posInLine(pos), (pos == chars.length - 1) + "Illegal single equal sign (=)");
 							}
 						}
 						break;
 						default: {
 							if (Character.isDigit(ch)) {
-								if (pos + 1 < chars.length - 1) {
+								if (pos < chars.length - 1) {
 									state = State.IS_DIGIT;
 								} else {
 									tokens.add(new Token(Kind.INTEGER_LITERAL, startPos, 1));
@@ -485,7 +484,7 @@ public class Scanner {
 								}
 								pos++;
 							} else if (Character.isLetter(ch)) {
-								if (pos + 1 < chars.length - 1) {
+								if (pos < chars.length - 1) {
 									state = State.IS_IDENTI;
 								} else {
 									if(ch == 'Z') {
@@ -522,8 +521,7 @@ public class Scanner {
 						pos++;
 						state = State.START;
 					} else {
-						tokens.add(new Token(Kind.OP_ASSIGN, startPos, 1));
-						state = State.START;
+						error(pos, line(pos), posInLine(pos), (pos == chars.length - 1) + "Illegal single equal sign (=)");
 					} 
 				}
 				break;
@@ -595,10 +593,10 @@ public class Scanner {
 						}
 					}
 					StringBuilder sbForDot = new StringBuilder();
-					sbForDot.append(chars, startPos, pos);
+					sbForDot.append(chars, startPos, afterDotLength);
 					try {
 						Float.valueOf(sbForDot.toString());
-						tokens.add(new Token(Kind.FLOAT_LITERAL, startPos, afterDotLength));
+						tokens.add(new Token(Kind.FLOAT_LITERAL, startPos, afterDotLength + 1));
 						state = State.START;
 					} catch (Exception e) {
 						error(pos, line(pos), posInLine(line(pos)), "-->" + sbForDot.toString() + "<-- Illegal char - dot with non digits / digits out range");
@@ -642,31 +640,28 @@ public class Scanner {
 				case HAVE_SLASH: {
 					if (pos < chars.length && ch == '*') {
 							while (pos < chars.length) {
-								pos++;
-								// TODO check if its correct
-								while (pos < chars.length) {
-									if (Character.isWhitespace(chars[pos])) {
-										if (chars[pos] == '\n' || chars[pos] == '\r') {
-											if (chars[pos] == '\r' && chars[pos+1] == '\n') {
-												pos++;
-											}
-											pos++;
-										}else {
-											pos++;
-										}	
-									} else
-										break;
-								}
+//								pos++;
+//								// TODO check if its correct
+//								while (pos < chars.length) {
+//									if (Character.isWhitespace(chars[pos])) {
+//										if (chars[pos] == '\n' || chars[pos] == '\r') {
+//											if (chars[pos] == '\r' && chars[pos+1] == '\n') {
+//												pos++;
+//											}
+//											pos++;
+//										}else {
+//											pos++;
+//										}	
+//									} else
+//										break;
+//								}
 								
 								while (pos < chars.length) {
-									if (Character.isWhitespace(chars[pos])) {
-										if (chars[pos] == '\n') {
-										}
+									if (Character.isWhitespace(chars[pos]) && chars[pos] == '\n') {
 										pos++;
 									} else
 										break;
 								}
-//								pos = skipWhiteSpace(pos);
 								if (pos < chars.length && ch == '*') {
 									if (pos + 1 < chars.length && chars[pos + 1] == '/') {
 										pos = pos + 2;
@@ -841,7 +836,6 @@ public class Scanner {
 			
 		return this;
 	}
-
 
 	private void error(int pos, int line, int posInLine, String message) throws LexicalException {
 		String m = (line + 1) + ":" + (posInLine + 1) + " " + message;
