@@ -638,30 +638,13 @@ public class Scanner {
 				}
 				break;
 				case HAVE_SLASH: {
+//					if(pos == chars.length - 1 && ch != '/') {
+//						error(pos, line(pos), posInLine(line(pos)), "Non closing comments");
+//						break;
+//					}
 					if (pos < chars.length && ch == '*') {
-							while (pos < chars.length) {
-//								pos++;
-//								// TODO check if its correct
-//								while (pos < chars.length) {
-//									if (Character.isWhitespace(chars[pos])) {
-//										if (chars[pos] == '\n' || chars[pos] == '\r') {
-//											if (chars[pos] == '\r' && chars[pos+1] == '\n') {
-//												pos++;
-//											}
-//											pos++;
-//										}else {
-//											pos++;
-//										}	
-//									} else
-//										break;
-//								}
-								
-								while (pos < chars.length) {
-									if (Character.isWhitespace(chars[pos]) && chars[pos] == '\n') {
-										pos++;
-									} else
-										break;
-								}
+						while (pos < chars.length) {
+								pos++;
 								if (pos < chars.length && ch == '*') {
 									if (pos + 1 < chars.length && chars[pos + 1] == '/') {
 										pos = pos + 2;

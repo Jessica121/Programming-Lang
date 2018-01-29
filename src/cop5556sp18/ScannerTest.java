@@ -193,30 +193,30 @@ public class ScannerTest {
 	
 	@Test
 	public void testSq() throws LexicalException {
-		String input = "00.0099889";
+		String input = "..";
 		Scanner scanner = new Scanner(input).scan();
 		show(input);
 		show(scanner);
-		checkNext(scanner, INTEGER_LITERAL, 0, 1, 1, 1);
-		checkNext(scanner, FLOAT_LITERAL, 9);
+		checkNext(scanner, DOT, 1);
+		checkNext(scanner, DOT, 1);
 //		checkNext(scanner, INTEGER_LITERAL, 2, 1, 2, 1);
 //		checkNext(scanner, INTEGER_LITERAL, 3, 1, 2, 2);
 //		checkNextIsEOF(scanner);
 	}
 
-//	@Test
-//	public void testComments() throws LexicalException {
-//		String input = "/****//*123*//**//*132142134324fa&**%%%%dsf8*****";
-//		show(input);
-//		thrown.expect(LexicalException.class);  //Tell JUnit to expect a LexicalException
-//		try {
-//			Scanner scanner = new Scanner(input).scan();
-//			show(scanner);
-//		} catch (LexicalException e) {  //Catch the exception
-//			show(e);                    //Display it
-//			throw e;                    //Rethrow exception so JUnit will see it
-//		}
-//	}
+	@Test
+	public void testComments() throws LexicalException {
+		String input = "/****//*123*//**//*132142134324fa&**%%%%dsf8*****";
+		show(input);
+		thrown.expect(LexicalException.class);  //Tell JUnit to expect a LexicalException
+		try {
+			Scanner scanner = new Scanner(input).scan();
+			show(scanner);
+		} catch (LexicalException e) {  //Catch the exception
+			show(e);                    //Display it
+			throw e;                    //Rethrow exception so JUnit will see it
+		}
+	}
 	
 	@Test
 	public void testSeperator() throws LexicalException {
