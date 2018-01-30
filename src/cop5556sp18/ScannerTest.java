@@ -193,12 +193,12 @@ public class ScannerTest {
 	
 	@Test
 	public void testSq() throws LexicalException {
-		String input = "..";
+		String input = ":=";
 		Scanner scanner = new Scanner(input).scan();
 		show(input);
 		show(scanner);
-		checkNext(scanner, DOT, 1);
-		checkNext(scanner, DOT, 1);
+		checkNext(scanner, OP_ASSIGN, 2);
+//		checkNext(scanner, DOT, 1);
 //		checkNext(scanner, INTEGER_LITERAL, 2, 1, 2, 1);
 //		checkNext(scanner, INTEGER_LITERAL, 3, 1, 2, 2);
 //		checkNextIsEOF(scanner);
