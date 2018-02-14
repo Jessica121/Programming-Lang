@@ -389,7 +389,7 @@ public class Scanner {
 						}
 						break;
 						case '0': {
-							if (pos < chars.length - 1) {
+							if (pos < chars.length - 2 && (chars[pos + 1] == '.' || Character.isDigit(chars[pos + 1]))) {
 								state = State.HAVE_ZERO;
 							} else {
 								tokens.add(new Token(Kind.INTEGER_LITERAL, startPos, pos - startPos + 1));
@@ -620,7 +620,7 @@ public class Scanner {
 						state = State.HAVE_DOT;
 						pos++;
 					} else {
-						tokens.add(new Token(Kind.INTEGER_LITERAL, startPos, 1));
+						tokens.add(new Token(Kind.INTEGER_LITERAL, startPos, pos - startPos + 1));
 						state = State.START;
 						pos++;
 					}
