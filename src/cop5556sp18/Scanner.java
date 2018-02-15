@@ -669,7 +669,7 @@ public class Scanner {
 					StringBuilder str = new StringBuilder();
 					int strLen;
 					str.append(chars[pos - 1]);
-					while (pos < chars.length - 1 && (Character.isJavaIdentifierStart(chars[pos])) || Character.isDigit(chars[pos])) {
+					while (pos < chars.length - 1 && (Character.isJavaIdentifierStart(chars[pos]))) { //|| Character.isDigit(chars[pos])
 						str.append(chars[pos]);
 						pos++;
 					}
@@ -810,6 +810,11 @@ public class Scanner {
 						}
 						break;
 						default: {
+							while (pos < chars.length - 1 && (Character.isJavaIdentifierStart(chars[pos])) || Character.isDigit(chars[pos])) { 
+								str.append(chars[pos]);
+								pos++;
+							}
+							strLen = str.length();
 							tokens.add(new Token(Kind.IDENTIFIER, startPos, strLen));
 						}
 					}

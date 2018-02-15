@@ -182,13 +182,10 @@ public class ScannerTest {
 
 	@Test
 	public void testParens() throws LexicalException {
-		String input = "()";
+		String input = "tre3we false true0 0false";
 		Scanner scanner = new Scanner(input).scan();
 		show(input);
 		show(scanner);
-		checkNext(scanner, LPAREN, 0, 1, 1, 1);
-		checkNext(scanner, RPAREN, 1, 1, 1, 2);
-		checkNextIsEOF(scanner);
 	}
 	
 	@Test
@@ -210,12 +207,12 @@ public class ScannerTest {
 	
 	@Test
 	public void testLen() throws LexicalException {
-		String input = "0. .0";
+		String input = "010a010a 1\n1";
 		Scanner scanner = new Scanner(input).scan();
 		show(input);
 		show(scanner);
-//		checkNext(scanner, OP_LE, 2);
 	}
+
 	
 }
 	
