@@ -204,19 +204,13 @@ public class ScannerTest {
 	public void testEqual() throws LexicalException {
 		String input = "..123 1.abc .. 123.. 1.23 1..2..3.";
 		show(input);
-		thrown.expect(LexicalException.class);  //Tell JUnit to expect a LexicalException
-		try {
 			Scanner scanner = new Scanner(input).scan();
 			show(scanner);
-		} catch (LexicalException e) {  //Catch the exception
-			show(e);                    //Display it
-			throw e;                    //Rethrow exception so JUnit will see it
-		}
 	}
 	
 	@Test
 	public void testLen() throws LexicalException {
-		String input = "00100";
+		String input = "123/*abc/def*/4567";
 		Scanner scanner = new Scanner(input).scan();
 		show(input);
 		show(scanner);

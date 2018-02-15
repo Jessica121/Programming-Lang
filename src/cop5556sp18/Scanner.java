@@ -289,7 +289,6 @@ public class Scanner {
 	}
 
 	 
-	 //TODO: Modify this to deal with the entire lexical specification
 	public Scanner scan() throws LexicalException {
 		int pos = 0;
 		State state = State.START;
@@ -399,7 +398,7 @@ public class Scanner {
 						}
 						break;
 						case '.': {
-							if (pos > 0 && pos < chars.length - 1 && Character.isDigit(chars[pos - 1])) {
+							if (pos > 0 && pos < chars.length - 1 && Character.isDigit(chars[pos + 1])) {
 								state = State.HAVE_DOT;
 							} else {
 								tokens.add(new Token(Kind.DOT, startPos, pos - startPos + 1));
@@ -474,8 +473,9 @@ public class Scanner {
 							}
 						}
 						break;
-						default: {
+						default: { // TODO 12.34 float not integer
 							if (Character.isDigit(ch)) {
+//								System.out.println("ch " + ch + ", pos " + pos + ", chars.length " + chars.length);
 								if (pos < chars.length - 1) {
 									state = State.IS_DIGIT;
 								} else {
@@ -558,10 +558,10 @@ public class Scanner {
 				}
 				break;
 				
-				case IS_DIGIT:
-					if (chars[pos] == '.') {
+				case IS_DIGIT://TODO
+					if (pos < chars.length - 1 && chars[pos + 1] == '.') {
+						pos = pos + 2;
 						state = State.HAVE_DOT;
-						pos++;
 						break;
 					} 
 					int digitLength = 1;
@@ -570,7 +570,6 @@ public class Scanner {
 						digitLength++;
 					}
 					StringBuilder sb = new StringBuilder();
-					// TODO pos?
 					sb.append(chars, startPos, digitLength);
 					try {
 						Integer.parseInt(sb.toString());
@@ -581,22 +580,23 @@ public class Scanner {
 					}
 				break;
 				
+				// TODO
 				case HAVE_DOT:
 					int afterDotLength = 1;
 					while (pos < chars.length - 1) {
 						if(!Character.isDigit(chars[pos])) {
-							error(pos, line(pos), posInLine(line(pos)), "Illegal char - dot followed by non digits");
 							break;
 						} else {
 							pos++;
 							afterDotLength++;
 						}
 					}
+//					System.out.println("after dot len ->" + afterDotLength + ", start->" + startPos);
 					StringBuilder sbForDot = new StringBuilder();
 					sbForDot.append(chars, startPos, afterDotLength);
 					try {
 						Float.valueOf(sbForDot.toString());
-						tokens.add(new Token(Kind.FLOAT_LITERAL, startPos, afterDotLength + 1));
+						tokens.add(new Token(Kind.FLOAT_LITERAL, startPos, pos + 1));
 						state = State.START;
 					} catch (Exception e) {
 						error(pos, line(pos), posInLine(line(pos)), "-->" + sbForDot.toString() + "<-- Illegal char - dot with non digits / digits out range");
@@ -641,7 +641,7 @@ public class Scanner {
 					if (pos < chars.length && ch == '*') {
 						while (pos < chars.length) {
 								pos++;
-								if (pos < chars.length && ch == '*') {
+								if (pos < chars.length && chars[pos] == '*') {
 									if (pos + 1 < chars.length && chars[pos + 1] == '/') {
 										pos = pos + 2;
 										state = State.START;
@@ -669,7 +669,7 @@ public class Scanner {
 					StringBuilder str = new StringBuilder();
 					int strLen;
 					str.append(chars[pos - 1]);
-					while (pos < chars.length - 1 && (Character.isJavaIdentifierStart(chars[pos]) || Character.isDigit(chars[pos]))) {
+					while (pos < chars.length - 1 && (Character.isJavaIdentifierStart(chars[pos])) || Character.isDigit(chars[pos])) {
 						str.append(chars[pos]);
 						pos++;
 					}
