@@ -596,7 +596,7 @@ public class Scanner {
 					sbForDot.append(chars, startPos, afterDotLength);
 					try {
 						Float.valueOf(sbForDot.toString());
-						tokens.add(new Token(Kind.FLOAT_LITERAL, startPos, pos + 1));
+						tokens.add(new Token(Kind.FLOAT_LITERAL, startPos, afterDotLength + 1));
 						state = State.START;
 					} catch (Exception e) {
 						error(pos, line(pos), posInLine(line(pos)), "-->" + sbForDot.toString() + "<-- Illegal char - dot with non digits / digits out range");

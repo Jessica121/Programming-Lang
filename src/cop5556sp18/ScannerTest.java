@@ -210,7 +210,7 @@ public class ScannerTest {
 	
 	@Test
 	public void testLen() throws LexicalException {
-		String input = "123/*abc/def*/4567";
+		String input = "0. .0";
 		Scanner scanner = new Scanner(input).scan();
 		show(input);
 		show(scanner);
