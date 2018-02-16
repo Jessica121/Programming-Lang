@@ -168,7 +168,7 @@ public class ScannerTest {
 	 */
 	@Test
 	public void failIllegalChar() throws LexicalException {
-		String input = "...";
+		String input = "00.00 0.0";
 		Scanner scanner = new Scanner(input).scan();
 		show(input);
 		show(scanner);
@@ -176,7 +176,7 @@ public class ScannerTest {
 
 	@Test
 	public void testParens() throws LexicalException {
-		String input = "124.34";
+		String input = "2.";
 		Scanner scanner = new Scanner(input).scan();
 		show(input);
 		show(scanner);
@@ -197,7 +197,7 @@ public class ScannerTest {
 
 	@Test
 	public void testEqual() throws LexicalException {
-		String input = "..123 1.abc .. 123.. 1.23 1..2..3.";
+		String input = "00.00 0.0";
 		show(input);
 			Scanner scanner = new Scanner(input).scan();
 			show(scanner);
@@ -205,7 +205,7 @@ public class ScannerTest {
 	
 	@Test
 	public void testLen() throws LexicalException {
-		String input = "010a010a 1\n1";
+		String input = "..123 1.abc .. 123.. 1.23 1..2..3.";
 		Scanner scanner = new Scanner(input).scan();
 		show(input);
 		show(scanner);

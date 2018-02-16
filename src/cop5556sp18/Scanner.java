@@ -559,11 +559,11 @@ public class Scanner {
 				break;
 				
 				case IS_DIGIT://TODO
-//					if (pos < chars.length - 1 && chars[pos + 1] == '.') {
-//						pos = pos + 2;
-//						state = State.HAVE_DOT;
-//						break;
-//					} 
+					if (pos < chars.length - 1 && chars[pos] == '.') {
+						pos++;
+						state = State.HAVE_DOT;
+						break;
+					} 
 					int digitLength = 1;
 					while (pos < chars.length - 1 && Character.isDigit(chars[pos])) {
 						if(chars[pos + 1] == '.') {
@@ -589,16 +589,16 @@ public class Scanner {
 				
 				// TODO
 				case HAVE_DOT:
-					int afterDotLength = 1;
+//					int afterDotLength = 1;
 					while (pos < chars.length - 1) {
 						if(!Character.isDigit(chars[pos])) {
 							break;
 						} else {
 							pos++;
-							afterDotLength++;
+//							afterDotLength++;
 						}
 					}
-					System.out.println("after dot len ->" + pos + ", start->" + startPos);
+//					System.out.println("after dot len ->" + pos + ", start->" + startPos);
 					StringBuilder sbForDot = new StringBuilder();
 					sbForDot.append(chars, startPos, pos - startPos);
 					try {
