@@ -590,7 +590,6 @@ public class Scanner {
 				// TODO
 				case HAVE_DOT:
 					int afterDotLength = 1;
-					int stt = pos;
 					while (pos < chars.length - 1) {
 						if(!Character.isDigit(chars[pos])) {
 							break;
@@ -599,12 +598,12 @@ public class Scanner {
 							afterDotLength++;
 						}
 					}
-					System.out.println("after dot len ->" + afterDotLength + ", start->" + pos);
+					System.out.println("after dot len ->" + pos + ", start->" + startPos);
 					StringBuilder sbForDot = new StringBuilder();
-					sbForDot.append(chars, startPos, afterDotLength);
+					sbForDot.append(chars, startPos, pos - startPos);
 					try {
-						Float.valueOf(sbForDot.toString());
-						tokens.add(new Token(Kind.FLOAT_LITERAL, startPos, afterDotLength + 1));
+						Float.valueOf(sbForDot.toString().trim());
+						tokens.add(new Token(Kind.FLOAT_LITERAL, startPos, pos - startPos));
 						state = State.START;
 					} catch (Exception e) {
 						error(pos, line(pos), posInLine(line(pos)), "-->" + sbForDot.toString() + "<-- Illegal char - dot with non digits / digits out range");
