@@ -111,14 +111,14 @@ public class SimpleParserTest {
 	
 	@Test
 	public void test5() throws LexicalException, SyntaxException {
-		String input = "b{float a;float b;float c; a:=5; b:=6;c:=a**b;}";
+		String input = "b{c:=a*b;}";
 		SimpleParser parser = makeParser(input);
 		parser.parse();
 	}
 	
 	@Test
 	public void test6() throws LexicalException, SyntaxException {
-		String input = "b{int c;}";
+		String input = "prog{show a[1,2];}";
 		SimpleParser parser = makeParser(input);
 		parser.parse();
 	}

@@ -307,17 +307,12 @@ public class SimpleParser {
 		// TODO check ε is correct
 		if (getTypeSets("UnaryExpression").contains(t.kind)) {
 			unaryExpression();
-			if (isKind(OP_TIMES)) {
+			if (isKind(OP_POWER)) {
 				consume();
-				if (isKind(OP_TIMES)) {
-					consume();
-					if (getTypeSets("PowerExpression").contains(t.kind)) {
-						powerExpression();
-					} else {
-						throw new SyntaxException(t, "Error while parsing program at " + t.kind);
-					}
-				} else {
+				if (getTypeSets("PowerExpression").contains(t.kind)) {
 					powerExpression();
+				} else {
+					throw new SyntaxException(t, "Error while parsing program at " + t.kind);
 				}
 			} 
 		} else {
