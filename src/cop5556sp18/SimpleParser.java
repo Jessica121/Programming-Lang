@@ -14,6 +14,7 @@ package cop5556sp18;
 
 
 import cop5556sp18.Scanner.Token;
+import cop5556sp18.SimpleParser.SyntaxException;
 import cop5556sp18.Scanner.Kind;
 import static cop5556sp18.Scanner.Kind.*;
 
@@ -65,19 +66,33 @@ public class SimpleParser {
 	Kind[] firstDec = { KW_int, KW_boolean, KW_image, KW_float, KW_filename };
 	Kind[] firstStatement = {KW_input, KW_write, IDENTIFIER, KW_red, KW_blue, 
 			KW_green, KW_alpha, KW_while, KW_if, KW_show, KW_sleep};
-
+//
+//	public void block() throws SyntaxException {
+//		match(LBRACE);
+//		while (isKind(firstDec) || isKind(firstStatement) )//(getTypeSets("Declaration").contains(t.kind) || getTypeSets("Statement").contains(t.kind)) 
+//		{
+//		     if (isKind(firstDec)) { //getTypeSets("Declaration").contains(t.kind)
+//				declaration();
+//			} else if (isKind(firstStatement)) { // getTypeSets("Statement").contains(t.kind)
+//				statement();
+//			}
+//			match(SEMI);
+//		}
+//		match(RBRACE);
+//	}
+//	
 	public void block() throws SyntaxException {
 		match(LBRACE);
-		while (isKind(firstDec) || isKind(firstStatement) )//(getTypeSets("Declaration").contains(t.kind) || getTypeSets("Statement").contains(t.kind)) 
-		{
-		     if (isKind(firstDec)) { //getTypeSets("Declaration").contains(t.kind)
-				declaration();
-			} else if (isKind(firstStatement)) { // getTypeSets("Statement").contains(t.kind)
-				statement();
-			}
+		while (isKind(firstDec)|isKind(firstStatement)) {
+	     if (isKind(firstDec)) {
+			declaration();
+		} else if (isKind(firstStatement)) {
+			statement();
+		}
 			match(SEMI);
 		}
 		match(RBRACE);
+
 	}
 	
 	public void declaration() throws SyntaxException {
@@ -298,9 +313,11 @@ public class SimpleParser {
 					consume();
 					if (getTypeSets("PowerExpression").contains(t.kind)) {
 						powerExpression();
-					}else {
+					} else {
 						throw new SyntaxException(t, "Error while parsing program at " + t.kind);
 					}
+				} else {
+					powerExpression();
 				}
 			} 
 		} else {
@@ -547,13 +564,9 @@ public class SimpleParser {
 		// LHS ::=  IDENTIFIER  |  IDENTIFIER  PixelSelector | Color  (   IDENTIFIER  PixelSelector  )
 		if (isKind(IDENTIFIER)) {
 			consume();
-		} else if (isKind(IDENTIFIER)) {
-			consume();
 			if (getTypeSets("PixelSelector").contains(t.kind)) {
 				pixelSelector();
-			} else {
-				throw new SyntaxException(t,"Error while parsing program at " + t.kind);
-			}
+			} 
 		} else if (getTypeSets("Color").contains(t.kind)) {
 			color();
 			if (isKind(LPAREN)) {
