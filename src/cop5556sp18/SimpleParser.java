@@ -66,21 +66,7 @@ public class SimpleParser {
 	Kind[] firstDec = { KW_int, KW_boolean, KW_image, KW_float, KW_filename };
 	Kind[] firstStatement = {KW_input, KW_write, IDENTIFIER, KW_red, KW_blue, 
 			KW_green, KW_alpha, KW_while, KW_if, KW_show, KW_sleep};
-//
-//	public void block() throws SyntaxException {
-//		match(LBRACE);
-//		while (isKind(firstDec) || isKind(firstStatement) )//(getTypeSets("Declaration").contains(t.kind) || getTypeSets("Statement").contains(t.kind)) 
-//		{
-//		     if (isKind(firstDec)) { //getTypeSets("Declaration").contains(t.kind)
-//				declaration();
-//			} else if (isKind(firstStatement)) { // getTypeSets("Statement").contains(t.kind)
-//				statement();
-//			}
-//			match(SEMI);
-//		}
-//		match(RBRACE);
-//	}
-//	
+	
 	public void block() throws SyntaxException {
 		match(LBRACE);
 		while (isKind(firstDec)|isKind(firstStatement)) {
@@ -92,7 +78,6 @@ public class SimpleParser {
 			match(SEMI);
 		}
 		match(RBRACE);
-
 	}
 	
 	public void declaration() throws SyntaxException {
@@ -304,7 +289,6 @@ public class SimpleParser {
 	
 	private void powerExpression() throws SyntaxException {
 		// PowerExpression:= UnaryExpression ( ** PowerExpression|ε)
-		// TODO check ε is correct
 		if (getTypeSets("UnaryExpression").contains(t.kind)) {
 			unaryExpression();
 			if (isKind(OP_POWER)) {
@@ -424,7 +408,7 @@ public class SimpleParser {
 				consume();
 				if (getTypeSets("Expression").contains(t.kind)) {
 					expression();
-					if (isKind(RPIXEL)) {
+					if (isKind(RPAREN)) {
 						consume();
 						if (getTypeSets("Block").contains(t.kind)) {
 							block();
@@ -617,8 +601,9 @@ public class SimpleParser {
 			functionApplication();
 		} else if (isKind(IDENTIFIER)) {
 			consume();
-		} else if (getTypeSets("PixelExpression").contains(t.kind)) {
-			pixelExpression();
+			if (getTypeSets("PixelSelector").contains(t.kind)) {
+				pixelSelector();
+			}
 		} else if (getTypeSets("PredefinedName").contains(t.kind)) {
 			predefinedName();
 		}  else if (getTypeSets("PixelConstructor").contains(t.kind)) {
