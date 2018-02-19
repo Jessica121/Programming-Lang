@@ -88,10 +88,8 @@ public class SimpleParser {
 				consume();
 				if (getTypeSets("PixelSelector").contains(t.kind)) {
 					pixelSelector();
-				} else {
-					throw new SyntaxException(t,"Error while parsing program at " + t.kind);
-				}
-			}else {
+				} 
+			} else {
 				throw new SyntaxException(t,"Error while parsing program at " + t.kind);
 			}
 		}else if (getTypeSets("Type").contains(t.kind)) {
@@ -108,7 +106,6 @@ public class SimpleParser {
 	
 //	 Statement ::= StatementInput | StatementWrite | StatementAssignment
 //	| StatementWhile | StatementIf | StatementShow | StatementSleep
-// TODO if it is correct
 	public void statement() throws SyntaxException {
 		if (getTypeSets("StatementInput").contains(t.kind)) {
 			inputStatement();
@@ -173,6 +170,8 @@ public class SimpleParser {
 						}else {
 							throw new SyntaxException(t, "Error while parsing program at " + t.kind);
 						}
+					} else {
+						throw new SyntaxException(t, "Error while parsing program at " + t.kind);
 					}
 				}else {
 					throw new SyntaxException(t, "Error while parsing program at " + t.kind);
@@ -437,7 +436,7 @@ public class SimpleParser {
 				consume();
 				if (getTypeSets("Expression").contains(t.kind)) {
 					expression();
-					if (isKind(RPIXEL)) {
+					if (isKind(RPAREN)) {
 						consume();
 						if (getTypeSets("Block").contains(t.kind)) {
 							block();
@@ -823,7 +822,7 @@ public class SimpleParser {
 				typeSets.add(KW_float);
 				typeSets.add(KW_boolean);
 				typeSets.add(KW_filename);
-				typeSets.add(KW_image);
+//				typeSets.add(KW_image);
 				break;
 			case "Statement":
 				typeSets = getTypeSets("StatementSleep", typeSets);

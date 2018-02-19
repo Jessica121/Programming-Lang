@@ -111,28 +111,28 @@ public class SimpleParserTest {
 	
 	@Test
 	public void test5() throws LexicalException, SyntaxException {
-		String input = "prog{if(a | b | c){};}";
+		String input = "prog{int a;a := (2+3)==(3+2)?1;}";
 		SimpleParser parser = makeParser(input);
 		parser.parse();
 	}
 	
 	@Test
 	public void test6() throws LexicalException, SyntaxException {
-		String input = "prog{while(true){};}";
+		String input = "prog{image image var4; }";
 		SimpleParser parser = makeParser(input);
 		parser.parse();
 	}
 	
 	@Test
 	public void test7() throws LexicalException, SyntaxException {
-		String input = "b{float a;float b;boolean c; a:=5; b:=6;if(a>=b){};}";
+		String input = "prog{a := (2+3)==(3+2)?1?0;}";
 		SimpleParser parser = makeParser(input);
 		parser.parse();
 	}
 	
 	@Test
 	public void test8() throws LexicalException, SyntaxException {
-		String input = "b{float a;a:=1.5;}";
+		String input = "prog{var := 100; var[0,0] := 25; red (var[0,0]) := 255; green (var[0,0]) := 255;blue (var[0,0]) := 255;alpha (var[0,0]) := 0.5;}";
 		SimpleParser parser = makeParser(input);
 		parser.parse();
 	}
