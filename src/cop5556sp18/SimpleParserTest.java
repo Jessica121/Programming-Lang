@@ -78,19 +78,18 @@ public class SimpleParserTest {
 		parser.parse();
 	}	
 	
-	
 	//This test should pass in your complete parser.  It will fail in the starter code.
 	//Of course, you would want a better error message. 
 	@Test
 	public void test1() throws LexicalException, SyntaxException {
-		String input = "b{int c;}";
+		String input = "b{a << 0, 0, 0, 0>>;}";
 		SimpleParser parser = makeParser(input);
 		parser.parse();
 	}
 	
 	@Test
 	public void test2() throws LexicalException, SyntaxException {
-		String input = "prog{var := 100; var[0,0] := 25; red (var[0,0]) := 255; green (var[0,0]) := 255;blue (var[0,0]) := 255;alpha (var[0,0]) := 0.5;}";
+		String input = "prog{red (var[0,0]) := 255;}";
 		SimpleParser parser = makeParser(input);
 		parser.parse();
 	}
@@ -104,7 +103,7 @@ public class SimpleParserTest {
 	
 	@Test
 	public void test4() throws LexicalException, SyntaxException {
-		String input = "prog{float 2.345; }";
+		String input = "prog{show a[1,2];}";
 		SimpleParser parser = makeParser(input);
 		parser.parse();
 	}

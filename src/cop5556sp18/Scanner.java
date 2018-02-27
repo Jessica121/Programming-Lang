@@ -17,9 +17,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 //import java.util.HashMap;
 
-import cop5556sp18.Scanner.Kind;
-import cop5556sp18.Scanner.State;
-import cop5556sp18.Scanner.Token;
+//import cop5556sp18.Scanner.Kind;
+//import cop5556sp18.Scanner.State;
+//import cop5556sp18.Scanner.Token;
 
 public class Scanner {
 

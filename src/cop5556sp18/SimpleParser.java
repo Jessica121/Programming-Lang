@@ -15,6 +15,7 @@ package cop5556sp18;
 
 import cop5556sp18.Scanner.Token;
 import cop5556sp18.SimpleParser.SyntaxException;
+import cop5556sp18.AST.Expression;
 import cop5556sp18.Scanner.Kind;
 import static cop5556sp18.Scanner.Kind.*;
 
@@ -302,35 +303,46 @@ public class SimpleParser {
 			throw new SyntaxException(t, "Error while parsing program at " + t.kind);
 		}
 	}
-	
-	private void pixelExpression() throws SyntaxException{
-		// PixelExpression ::=  IDENTIFIER  PixelSelector
-		if (isKind(IDENTIFIER)) {
-			consume();
-			if (getTypeSets("PixelSelector").contains(t.kind)) {
-				pixelSelector();
-			}else {
-				throw new SyntaxException(t, "Error while parsing program at " + t.kind);
-			}
-		} else {
-			throw new SyntaxException(t, "Error while parsing program at " + t.kind);
-		}
-	}
+//	
+//	private void pixelExpression() throws SyntaxException{
+//		// PixelExpression ::=  IDENTIFIER  PixelSelector
+//		if (isKind(IDENTIFIER)) {
+//			consume();
+//			if (getTypeSets("PixelSelector").contains(t.kind)) {
+//				pixelSelector();
+//			}else {
+//				throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+//			}
+//		} else {
+//			throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+//		}
+//	}
 	
 	private void pixelSelector() throws SyntaxException{
 //		PixelSelector ::=  [  Expression  ,  Expression  ]
 		if (isKind(LSQUARE)) {
 			consume();
-			if (getTypeSets("Selector").contains(t.kind)) {
-				helperExpCOMExp();
-				if (isKind(RSQUARE)) {
-					consume();
-				}else {
-					throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+				// Expression COMMA Expression   
+				if (getTypeSets("Expression").contains(t.kind)) {
+					expression();
+					if (isKind(COMMA)) {
+						consume();
+						if (getTypeSets("Expression").contains(t.kind)) {
+							expression();
+							if (isKind(RSQUARE)) {
+								consume();
+							}else {
+								throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+							}
+						}else {
+							throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+						}
+					} else {
+						throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+					}
+				} else {
+						throw new SyntaxException(t,"Error while parsing program at " + t.kind);
 				}
-			}else {
-				throw new SyntaxException(t,"Error while parsing program at " + t.kind);
-			}
 		}else {
 			throw new SyntaxException(t,"Error while parsing program at " + t.kind);
 		}
@@ -338,32 +350,38 @@ public class SimpleParser {
 
 	private void pixelConstructor() throws SyntaxException{
 //		PixelConstructor ::=  <<   Expression  ,  Expression ,    Expression  ,  Expression  >>
+//		public ExpressionPixelConstructor(Token firstToken, Expression alpha,
+//		Expression red, Expression green, Expression blue) {
 		if (isKind(LPIXEL)) {
 			consume();
-			if (getTypeSets("Selector").contains(t.kind)) {
-				helperExpCOMExp();
-				if (isKind(COMMA)) {
-					consume();
-					if (getTypeSets("Selector").contains(t.kind)) {
-						helperExpCOMExp();
-						if (isKind(RPIXEL)) {
-							consume();
-						}else {
-							throw new SyntaxException(t, "Error while parsing program at " + t.kind);
-						}
-					}else {
-						throw new SyntaxException(t, "Error while parsing program at " + t.kind);
-					}
-				}else {
-					throw new SyntaxException(t, "Error while parsing program at " + t.kind);
-				}
-			}else {
-				throw new SyntaxException(t, "Error while parsing program at " + t.kind);
-			}
-		} else {
-			throw new SyntaxException(t, "Error while parsing program at " + t.kind);
-		}
+				// Expression COMMA Expression   
+				if (getTypeSets("Expression").contains(t.kind)) {
+					expression();
+					if (isKind(COMMA)) {
+						consume();
+						if (getTypeSets("Expression").contains(t.kind)) {
+							expression();
+							if (isKind(COMMA)) {
+								consume();
+								if (getTypeSets("Expression").contains(t.kind)) {
+									expression();
+								if (isKind(COMMA)) {
+									consume();
+									if (getTypeSets("Expression").contains(t.kind)) {
+										expression();
+										if (isKind(RPIXEL)) {
+											consume();
+										} else throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+									} else throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+								} else throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+							} else throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+						} else throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+					} else throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+				} else throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+			} else throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+		} else throw new SyntaxException(t, "Error while parsing program at " + t.kind);
 	}
+						
 	
 	private void color() throws SyntaxException {
 			// Color ::=  red  |  green  |  blue  |  alpha
