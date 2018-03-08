@@ -91,21 +91,6 @@ public class ParserTest {
 		Program p = parser.parse();
 	}
 	
-	/**
-	 * Smallest legal program.
-	 *   
-	 * @throws LexicalException
-	 * @throws SyntaxException 
-	 */
-	@Test
-	public void testSmallest() throws LexicalException, SyntaxException {
-		String input = "b{}";  
-		Parser parser = makeParser(input);
-		Program p = parser.parse();
-		show(p);
-		assertEquals("b", p.progName);
-		assertEquals(0, p.block.decsOrStatements.size());
-	}	
 	
 	
 	/**
@@ -127,16 +112,7 @@ public class ParserTest {
 		assertEquals(name, dec.name);
 		return dec;
 	}	
-	
-	@Test
-	public void testDec0() throws LexicalException, SyntaxException {
-		String input = "b{int c; image j;}";
-		Parser parser = makeParser(input);
-		Program p = parser.parse();
-		show(p);	
-		checkDec(p.block, 0, Kind.KW_int, "c");
-		checkDec(p.block, 1, Kind.KW_image, "j");
-	}
+
 	
 	
 	/** This test illustrates how you can test specific grammar elements by themselves by
@@ -148,21 +124,15 @@ public class ParserTest {
 	 */
 	
 	@Test
-	public void testExpression() throws LexicalException, SyntaxException {
-		String input = "x + 2";
-		Parser parser = makeParser(input);
-		Expression e = parser.expression();  //call expression here instead of parse
-		show(e);	
-		assertEquals(ExpressionBinary.class, e.getClass());
-		ExpressionBinary b = (ExpressionBinary)e;
-		assertEquals(ExpressionIdent.class, b.leftExpression.getClass());
-		ExpressionIdent left = (ExpressionIdent)b.leftExpression;
-		assertEquals("x", left.name);
-		assertEquals(ExpressionIntegerLiteral.class, b.rightExpression.getClass());
-		ExpressionIntegerLiteral right = (ExpressionIntegerLiteral)b.rightExpression;
-		assertEquals(2, right.value);
-		assertEquals(OP_PLUS, b.op);
-	}	
+	 public void testExpression6() throws LexicalException, SyntaxException {
+	  String input = "a**b**c*d/e%f+g*d-d*e<a+b>c+d<=e+f>=g+h==c!=d&a&b";
+	  show(input);
+	  Scanner scanner = new Scanner(input).scan(); 
+	  show(scanner); 
+	  Parser parser = new Parser(scanner);
+	  Expression ast = parser.expression();
+	  show(ast);
+	 }
 }
 	
 

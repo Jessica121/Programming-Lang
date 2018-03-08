@@ -242,7 +242,7 @@ public class Parser {
 			while(isKind(OP_AND)) {
 				op = consume();
 				if (getTypeSets("EqExpression").contains(t.kind)) {
-					e1 = andExpression();
+					e1 = eqExpression();
 				}else {
 					throw new SyntaxException(t, "Error while parsing program at " + t.kind);
 				}
