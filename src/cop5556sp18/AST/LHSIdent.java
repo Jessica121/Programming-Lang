@@ -14,14 +14,18 @@ package cop5556sp18.AST;
  */
 
 import cop5556sp18.Scanner.Token;
+import cop5556sp18.Types.Type;
 
 public class LHSIdent extends LHS {
 
 	public final String name;
+	public Declaration dec;
+//	public Type typeName;
 
 	public LHSIdent(Token firstToken, Token name) {
 		super(firstToken);
 		this.name = name.getText();
+		dec = null;
 	}
 
 	@Override

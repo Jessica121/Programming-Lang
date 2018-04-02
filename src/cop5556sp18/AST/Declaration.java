@@ -1,6 +1,7 @@
 package cop5556sp18.AST;
 
 import cop5556sp18.Scanner.Kind;
+import cop5556sp18.Types.Type;
 
 /**
  * This code is for the class project in COP5556 Programming Language Principles 
@@ -23,7 +24,7 @@ public class Declaration extends ASTNode {
 	public final String name;
 	public final Expression width;  //non null only for images declared with a size
 	public final Expression height;  //non null only for images declared with a size
-	
+	public Type typeName;
 
 	public Declaration(Token firstToken, Token type, Token name, Expression width, Expression height) {
 		super(firstToken);
@@ -33,6 +34,10 @@ public class Declaration extends ASTNode {
 		this.height = height;
 	}
 
+	public Type getTypeName() {
+		return typeName;
+	}
+	
 	@Override
 	public Object visit(ASTVisitor v, Object arg) throws Exception {
 		return v.visitDeclaration(this, arg);

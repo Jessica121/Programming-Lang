@@ -14,16 +14,22 @@ package cop5556sp18.AST;
  */
 
 import cop5556sp18.Scanner.Token;
+import cop5556sp18.Types.Type;
 
 public abstract class ASTNode {
 
 	final public Token firstToken;
+	public Type typeName;
 
 	public ASTNode(Token firstToken) {
 		super();
 		this.firstToken = firstToken;
 	}
 
+	public Type getTypeName() {
+		return typeName;
+	}
+	
 	public abstract Object visit(ASTVisitor v, Object arg) throws Exception;
 
 	@Override
