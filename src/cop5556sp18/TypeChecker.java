@@ -82,12 +82,10 @@ public class TypeChecker implements ASTVisitor {
 		 * sourceDec.type == image*/
 		statementWrite.srcDec = symbolTable.lookup(statementWrite.sourceName);
 		statementWrite.destDec = symbolTable.lookup(statementWrite.destName);
-		if (statementWrite.srcDec != null && statementWrite.destDec != null) {
-		} else {
+		if (statementWrite.srcDec == null || statementWrite.destDec == null 
+				|| statementWrite.srcDec.typeName != Type.IMAGE || statementWrite.destDec.typeName != Type.FILE) {
 			throw new SemanticException(statementWrite.firstToken, "Illegal type at visit ident chain");
 		}
-		if(statementWrite.srcDec.typeName != Type.IMAGE) 			
-			throw new SemanticException(statementWrite.firstToken, "Illegal type at visit ident chain");
 		return statementWrite;
 	}
 
@@ -111,8 +109,8 @@ public class TypeChecker implements ASTVisitor {
 		Expression e0 = (Expression) pixelSelector.ex.visit(this, null);
 		Expression e1 = (Expression) pixelSelector.ey.visit(this, null);
 		if(e0.typeName != e1.typeName) throw new SemanticException(pixelSelector.firstToken, "Type mismatch");
-		if(e0.typeName == Type.INTEGER || e0.typeName == Type.FLOAT) {	
-		} else throw new SemanticException(pixelSelector.firstToken, "Type mismatch");
+		if(e0.typeName == Type.INTEGER || e0.typeName == Type.FLOAT) {}	
+		else throw new SemanticException(pixelSelector.firstToken, "Type mismatch");
 		return pixelSelector;
 	}
 
@@ -319,11 +317,8 @@ public class TypeChecker implements ASTVisitor {
 			LHSSample.dec.type == image
 			LHSSample.type ← integer*/
 		lhsSample.dec = symbolTable.lookup(lhsSample.name);
-		if (lhsSample.dec != null) {
-		} else {
-			throw new SemanticException(lhsSample.firstToken, "Illegal type at visit ident chain");
-		}
-		if(lhsSample.dec.typeName != Type.IMAGE) 			
+		lhsSample.pixelSelector.visit(this, null);
+		if (lhsSample.dec == null || lhsSample.dec.typeName != Type.IMAGE) 			
 			throw new SemanticException(lhsSample.firstToken, "Illegal type at visit ident chain");
 		lhsSample.typeName = Type.INTEGER;
 		return lhsSample;
@@ -337,6 +332,7 @@ public class TypeChecker implements ASTVisitor {
 			LHSPixel.dec.type == image
 			LHSPixel.type ← integer*/
 		lhsPixel.dec = symbolTable.lookup(lhsPixel.name);
+		lhsPixel.pixelSelector.visit(this, null);
 		if (lhsPixel.dec != null) {
 		} else {
 			throw new SemanticException(lhsPixel.firstToken, "Illegal type at visit ident chain");

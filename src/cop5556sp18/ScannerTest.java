@@ -93,22 +93,6 @@ public class ScannerTest {
 		return t;
 	}
 	
-
-
-	/**
-	 * Simple test case with an empty program.  The only Token will be the EOF Token.
-	 *   
-	 * @throws LexicalException
-	 */
-	@Test
-	public void testEmpty() throws LexicalException {
-		String input = "";  //The input is the empty string.  This is legal
-		show(input);        //Display the input 
-		Scanner scanner = new Scanner(input).scan();  //Create a Scanner and initialize it
-		show(scanner);   //Display the Scanner
-		checkNextIsEOF(scanner);  //Check that the only token is the EOF token.
-	}
-	
 	/**
 	 * Test illustrating how to put a new line in the input program and how to
 	 * check content of tokens.
@@ -124,31 +108,31 @@ public class ScannerTest {
 	 * 
 	 * @throws LexicalException
 	 */
-	@Test
-	public void testSemi() throws LexicalException {
-		String input = ";;\n;;";
-		Scanner scanner = new Scanner(input).scan();
-		show(input);
-		show(scanner);
-		checkNext(scanner, SEMI, 0, 1, 1, 1);
-		checkNext(scanner, SEMI, 1, 1, 1, 2);
-		checkNext(scanner, SEMI, 3, 1, 2, 1);
-		checkNext(scanner, SEMI, 4, 1, 2, 2);
-		checkNextIsEOF(scanner);
-	}
-	
-	@Test
-	public void testAt() throws LexicalException {
-		String input = "@@\n@@";
-		Scanner scanner = new Scanner(input).scan();
-		show(input);
-		show(scanner);
-		checkNext(scanner, OP_AT, 0, 1, 1, 1);
-		checkNext(scanner, OP_AT, 1, 1, 1, 2);
-		checkNext(scanner, OP_AT, 3, 1, 2, 1);
-		checkNext(scanner, OP_AT, 4, 1, 2, 2);
-		checkNextIsEOF(scanner);
-	}
+//	@Test
+//	public void testSemi() throws LexicalException {
+//		String input = ";;\n;;";
+//		Scanner scanner = new Scanner(input).scan();
+//		show(input);
+//		show(scanner);
+//		checkNext(scanner, SEMI, 0, 1, 1, 1);
+//		checkNext(scanner, SEMI, 1, 1, 1, 2);
+//		checkNext(scanner, SEMI, 3, 1, 2, 1);
+//		checkNext(scanner, SEMI, 4, 1, 2, 2);
+//		checkNextIsEOF(scanner);
+//	}
+//	
+//	@Test
+//	public void testAt() throws LexicalException {
+//		String input = "@@\n@@";
+//		Scanner scanner = new Scanner(input).scan();
+//		show(input);
+//		show(scanner);
+//		checkNext(scanner, OP_AT, 0, 1, 1, 1);
+//		checkNext(scanner, OP_AT, 1, 1, 1, 2);
+//		checkNext(scanner, OP_AT, 3, 1, 2, 1);
+//		checkNext(scanner, OP_AT, 4, 1, 2, 2);
+//		checkNextIsEOF(scanner);
+//	}
 	
 
 	
@@ -168,48 +152,48 @@ public class ScannerTest {
 	 */
 	@Test
 	public void failIllegalChar() throws LexicalException {
-		String input = "00.00 0.0";
+		String input = "boolean";
 		Scanner scanner = new Scanner(input).scan();
 		show(input);
 		show(scanner);
 	}
 
-	@Test
-	public void testParens() throws LexicalException {
-		String input = "2.";
-		Scanner scanner = new Scanner(input).scan();
-		show(input);
-		show(scanner);
+//	@Test
+//	public void testParens() throws LexicalException {
+//		String input = "2.";
+//		Scanner scanner = new Scanner(input).scan();
+//		show(input);
+//		show(scanner);
 //		String input2 = "123.4567";
 //		Scanner scanner2 = new Scanner(input2).scan();
 //		show(input2);
 //		show(scanner2);
-	}
-	
-	@Test
-	public void testSq() throws LexicalException {
-		String input = "010a010a 1\n1";
-		Scanner scanner = new Scanner(input).scan();
-		show(input);
-		show(scanner);
-//		checkNext(scanner, FLOAT_LITERAL, 2);
-	}
-
-	@Test
-	public void testEqual() throws LexicalException {
-		String input = "00.00 0.0";
-		show(input);
-			Scanner scanner = new Scanner(input).scan();
-			show(scanner);
-	}
-	
-	@Test
-	public void testLen() throws LexicalException {
-		String input = "..123 1.abc .. 123.. 1.23 1..2..3.";
-		Scanner scanner = new Scanner(input).scan();
-		show(input);
-		show(scanner);
-	}
+//	}
+//	
+//	@Test
+//	public void testSq() throws LexicalException {
+//		String input = "010a010a 1\n1";
+//		Scanner scanner = new Scanner(input).scan();
+//		show(input);
+//		show(scanner);
+////		checkNext(scanner, FLOAT_LITERAL, 2);
+//	}
+//
+//	@Test
+//	public void testEqual() throws LexicalException {
+//		String input = "00.00 0.0";
+//		show(input);
+//			Scanner scanner = new Scanner(input).scan();
+//			show(scanner);
+//	}
+//	
+//	@Test
+//	public void testLen() throws LexicalException {
+//		String input = "..123 1.abc .. 123.. 1.23 1..2..3.";
+//		Scanner scanner = new Scanner(input).scan();
+//		show(input);
+//		show(scanner);
+//	}
 
 	
 }

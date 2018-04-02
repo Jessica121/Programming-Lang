@@ -111,6 +111,11 @@ public class Parser {
 			type = type();
 			if (isKind(IDENTIFIER)) {
 				name = consume();
+				if (getTypeSets("PixelSelector").contains(t.kind)) {
+					ps = pixelSelector();
+					width = ps.ex;
+					height = ps.ey;
+				} 
 			}else {
 				throw new SyntaxException(t,"Error while parsing program at " + t.kind);
 			}

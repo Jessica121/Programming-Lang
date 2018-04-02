@@ -64,7 +64,7 @@ public class TypeCheckerTest {
 	@Test
 	public void expression2_fail() throws Exception {
 //		String input = "prog{if(true){int var;}; if(true){input var from @1;};}"; //error, incompatible types in binary expression
-		String input = "prog{filename f1; write f1 to f1;}";
+		String input = "prog{image var1; red( var1[true,false]) := 5;}";
 		thrown.expect(SemanticException.class);
 		try {
 			typeCheck(input);

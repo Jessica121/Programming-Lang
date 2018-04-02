@@ -473,9 +473,8 @@ public class Scanner {
 							}
 						}
 						break;
-						default: { // TODO 12.34 float not integer
+						default: {
 							if (Character.isDigit(ch)) {
-//								System.out.println("ch " + ch + ", pos " + pos + ", chars.length " + chars.length);
 								if (pos < chars.length - 1) {
 									state = State.IS_DIGIT;
 								} else {
@@ -676,10 +675,11 @@ public class Scanner {
 					StringBuilder str = new StringBuilder();
 					int strLen;
 					str.append(chars[pos - 1]);
-					while (pos < chars.length - 1 && (Character.isJavaIdentifierStart(chars[pos]))) { //|| Character.isDigit(chars[pos])
+					while (pos < chars.length - 1 && (Character.isJavaIdentifierPart(chars[pos]))) { //|| Character.isDigit(chars[pos])
 						str.append(chars[pos]);
 						pos++;
 					}
+//					System.out.println(str.toString());
 					state = State.START;
 					strLen = str.length();
 					String keyword = str.toString();
