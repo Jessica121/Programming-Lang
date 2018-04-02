@@ -39,8 +39,6 @@ public class TypeChecker implements ASTVisitor {
 		List<ASTNode> decsOrStatements = block.decsOrStatements;
 		symbolTable.enterScope();
 		for(ASTNode node : decsOrStatements) {
-//			ASTNode node = decsOrStatements.get(i);
-//			System.out.println(node.toString());
 			node.visit(this, null);
 		}
 		symbolTable.leaveScope();
@@ -52,23 +50,20 @@ public class TypeChecker implements ASTVisitor {
 		Kind kind = declaration.type;
 		Type type = Types.getType(kind);
 		declaration.typeName = type;
-		if(symbolTable.lookup(declaration.name) != null)
+		if(!symbolTable.insert(declaration.name, declaration))
 			throw new SemanticException(declaration.firstToken, "Duplicate indent declaration");
 		Expression e0 = null, e1 = null;
 		if(declaration.width != null) {
 			e0 = (Expression) declaration.width.visit(this, null);
-//			System.out.println(e0.typeName);
 		}
 		if(declaration.height != null) {
 			e1 = (Expression) declaration.height.visit(this, null);
-//			System.out.println(e1.typeName);
 		}
 		if((e0 != null && (e0.typeName == Type.INTEGER && type == Type.IMAGE)) &&
 			(e1 != null && (e1.typeName == Type.INTEGER && type == Type.IMAGE)) ||
 			(e0 == null && e1 == null)) {
 		}
 		else throw new SemanticException(declaration.firstToken, "Type mismatch");
-		symbolTable.insert(declaration.name, declaration);
 		return declaration;
 	}
 

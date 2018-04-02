@@ -48,23 +48,16 @@ public class TypeCheckerTest {
 		ASTVisitor v = new TypeChecker();
 		ast.visit(v, null);
 	}
-//
-//	@Test
-//	public void expression1() throws Exception {
-////		String input = "prog {int var1; var1 := cart_x[1.0,1.0]; var1 := cart_y[1.0,1.0];}";
-////		String input = "prog{filename f1; write f1 to f1;}";
-////		String input = "prog{if(true){int var;}; if(true){input var from @1;};}";
-////		String input = "prog{image var1; red( var1[0.0,0]) := 5;}";
-////		String input = "prog{image var1; red( var1[true,false]) := 5;}";
-////		String input = "prog{image image1; write image1 to image1;}";
-//		String input = "prog{boolean a; boolean b; while(a & b){};}";
-//		typeCheck(input);
-//	}
+
+	@Test
+	public void expression1() throws Exception {
+		String input = "prog{int var1; float var2; boolean var3; image var4; filename var5; image var6[500,500];}";
+		typeCheck(input);
+	}
 
 	@Test
 	public void expression2_fail() throws Exception {
-//		String input = "prog{if(true){int var;}; if(true){input var from @1;};}"; //error, incompatible types in binary expression
-		String input = "prog{image var1; red( var1[true,false]) := 5;}";
+		String input = "prog{if(true){int var;}; if(true){input var from @1;};}";
 		thrown.expect(SemanticException.class);
 		try {
 			typeCheck(input);
