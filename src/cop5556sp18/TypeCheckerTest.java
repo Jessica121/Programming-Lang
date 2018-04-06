@@ -51,19 +51,19 @@ public class TypeCheckerTest {
 
 	@Test
 	public void expression1() throws Exception {
-		String input = "prog{int var1; float var2; boolean var3; image var4; filename var5; image var6[500,500];}";
+		String input = "prog{int y; y := 55; show y; y := -234; show y;} ";
 		typeCheck(input);
 	}
 
-	@Test
-	public void expression2_fail() throws Exception {
-		String input = "prog{if(true){int var;}; if(true){input var from @1;};}";
-		thrown.expect(SemanticException.class);
-		try {
-			typeCheck(input);
-		} catch (SemanticException e) {
-			show(e);
-			throw e;
-		}
-	}
+//	@Test
+//	public void expression2_fail() throws Exception {
+//		String input = "prog{float a; a := float(-3.7); show a; a := float(4); show a;}";
+//		thrown.expect(SemanticException.class);
+//		try {
+//			typeCheck(input);
+//		} catch (SemanticException e) {
+//			show(e);
+//			throw e;
+//		}
+//	}
 }

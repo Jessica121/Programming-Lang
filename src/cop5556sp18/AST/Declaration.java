@@ -25,6 +25,7 @@ public class Declaration extends ASTNode {
 	public final Expression width;  //non null only for images declared with a size
 	public final Expression height;  //non null only for images declared with a size
 	public Type typeName;
+	public int slotNum;
 
 	public Declaration(Token firstToken, Token type, Token name, Expression width, Expression height) {
 		super(firstToken);
@@ -43,6 +44,14 @@ public class Declaration extends ASTNode {
 		return v.visitDeclaration(this, arg);
 	}
 
+	public int getSlotNum() {
+		return slotNum;
+	}
+
+	public void setSlotNum(int slotNum) {
+		this.slotNum = slotNum;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

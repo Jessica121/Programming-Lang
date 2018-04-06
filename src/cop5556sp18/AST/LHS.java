@@ -19,6 +19,7 @@ import cop5556sp18.Types.Type;
 public abstract class LHS extends ASTNode {
 
 	public Type typeName;
+	public String name;
 
 	public LHS(Token firstToken) {
 		super(firstToken);

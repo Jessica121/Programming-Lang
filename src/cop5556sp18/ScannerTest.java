@@ -152,7 +152,7 @@ public class ScannerTest {
 	 */
 	@Test
 	public void failIllegalChar() throws LexicalException {
-		String input = "boolean";
+		String input = "prog{float a; a := float(-3.7); show a; a := float(4); show a;}";
 		Scanner scanner = new Scanner(input).scan();
 		show(input);
 		show(scanner);

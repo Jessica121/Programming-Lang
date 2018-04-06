@@ -257,6 +257,7 @@ public class TypeChecker implements ASTVisitor {
 		LHS lhs = (LHS) statementAssign.lhs.visit(this, null);
 		Expression expr = (Expression) statementAssign.e.visit(this, null);
 //		Type lhsType = null;
+		System.out.println(lhs.typeName + " " + expr.getTypeName());
 		if(lhs.typeName != expr.getTypeName()) {
 			throw new SemanticException(statementAssign.firstToken, "Type mismatch: statementAssign.lhs.typeName != expr.typeName");
 		}
