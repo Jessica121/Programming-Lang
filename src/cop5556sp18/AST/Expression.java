@@ -18,13 +18,12 @@ import cop5556sp18.Types.Type;
 
 public abstract class Expression extends ASTNode {
 
-//	public Type typeName; 
 	public Expression(Token firstToken) {
 		super(firstToken);
 	}
 
-//	public Type getType() {
-//		return typeName; 
-//	}
+	public Type getType() {
+		return typeName; 
+	}
 	
 }

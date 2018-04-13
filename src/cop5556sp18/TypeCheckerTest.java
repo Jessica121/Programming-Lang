@@ -51,7 +51,7 @@ public class TypeCheckerTest {
 
 	@Test
 	public void expression1() throws Exception {
-		String input = "prog{int y; y := 55; show y; y := -234; show y;} ";
+		String input = "prog{int a; a := int(-3.7); show a; a := int(4); show a;}";
 		typeCheck(input);
 	}
 
