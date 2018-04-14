@@ -186,8 +186,8 @@ public class CodeGenTest {
 	public void hwErrors() throws Exception {
 		String prog = "prog";
 //		String input = prog + "{show 0.2 + 0.2;}";	
-		String input = prog + "{show !1; show !-1; show !0; show !-2;} ";
-//		String input = prog + "{image x; input x from @ 0 ; show x; image y; y := x; show y;}";
+//		String input = prog + "{show !1; show !-1; show !0; show !-2;} ";
+		String input = prog + "{image x; input x from @ 0 ; show x; image y; y := x; show y;}";
 //		String input = prog + "{float a; a := float(-3.7); show a; a := float(4); show a;}";
 //		String input = prog + "{image y[512,256];\n show y;}";
 
@@ -201,7 +201,7 @@ public class CodeGenTest {
 	@Test
 	public void integerLit() throws Exception {
 		String prog = "prog";
-		String input = prog + "{int x; input x from @ 0 ; show x;\nfloat y; input y from @ 1; show y;\nboolean z; input z from @ 2; show z;\ninput z from @ 3; show z;}";	
+		String input = prog + "{image y;\n show y;}";	
 		byte[] bytecode = genCode(input);		
 		String[] commandLineArgs = {}; //create command line argument array to initialize params, none in this case		
 		runCode(prog, bytecode, commandLineArgs);	

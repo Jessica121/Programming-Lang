@@ -1,5 +1,6 @@
 package cop5556sp18;
 
+import cop5556sp18.AST.Declaration;
 import cop5556sp18.Scanner.Kind;
 import cop5556sp18.Scanner.Token;
 
@@ -33,4 +34,29 @@ public class Types {
 		assert false: "invoked getType with Kind that is not a type"; 
 		return null;
 	}
+	
+	public static String getJVMType(Type typeName) {
+		String localType = new String();
+		switch (typeName) {
+		case INTEGER:
+			localType = "I";
+			break;
+		case FLOAT:
+			localType = "F";
+			break;
+		case BOOLEAN:
+			localType = "Z";
+			break;
+		case IMAGE:
+			localType = "Ljava/awt/image/BufferedImage;";
+			break;
+		case FILE:
+			localType = "Ljava/lang/String;";
+			break;
+		default:
+			break;
+	}
+		return localType;
+	}
+	
 }

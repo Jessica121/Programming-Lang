@@ -1,5 +1,7 @@
 package cop5556sp18.AST;
 
+import org.objectweb.asm.Label;
+
 import cop5556sp18.Scanner.Kind;
 import cop5556sp18.Types.Type;
 
@@ -26,7 +28,7 @@ public class Declaration extends ASTNode {
 	public final Expression height;  //non null only for images declared with a size
 	public Type typeName;
 	public int slotNum;
-	public int startLevel, endLevel; // TODO getter and setter 
+	public Label startLevel, endLevel; 
 
 	public Declaration(Token firstToken, Token type, Token name, Expression width, Expression height) {
 		super(firstToken);
@@ -51,6 +53,22 @@ public class Declaration extends ASTNode {
 
 	public void setSlotNum(int slotNum) {
 		this.slotNum = slotNum;
+	}
+	
+	public Label getStartLevel() {
+		return startLevel;
+	}
+
+	public void setStartLevel(Label startLevel) {
+		this.startLevel = startLevel;
+	}
+	
+	public Label getEndLevel() {
+		return endLevel;
+	}
+
+	public void setEndLevel(Label endLevel) {
+		this.endLevel = endLevel;
 	}
 	
 	@Override
