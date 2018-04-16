@@ -21,10 +21,9 @@
 package cop5556sp18;
 
 
-public class RuntimePixelOps
-{
+public class RuntimePixelOps {
 	
-	public static final String className = "cop5556sp18/RuntimePixelOps";
+public static final String className = "cop5556sp18/RuntimePixelOps";
 
 //values for selecting individual color intensities in packed pixels
 public static final int SELECT_RED = 0x00ff0000,
@@ -44,16 +43,12 @@ public static final int ZERO_RED = 0xff00ffff,
                         ZERO_BLU = 0xffffff00,
 						ZERO_ALPHA = 0x00ffffff;
 
-
-
-
 //above values in arrays indexed by color for convenience
 public static final int[] BITMASKS = {SELECT_ALPHA, SELECT_RED, SELECT_GRN, SELECT_BLU, },
                           ZERO = {ZERO_ALPHA, ZERO_RED, ZERO_GRN, ZERO_BLU,  },
                           BITOFFSETS = {SHIFT_ALPHA, SHIFT_RED, SHIFT_GRN, SHIFT_BLU, };
 
 	public static final String JVMClassName = "cop5555/runtime/Pixel";
-
 
 	public static final int ALPHA = 0;
 	public static final int RED = 1;
