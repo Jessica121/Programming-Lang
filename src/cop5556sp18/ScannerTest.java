@@ -108,31 +108,23 @@ public class ScannerTest {
 	 * 
 	 * @throws LexicalException
 	 */
-//	@Test
-//	public void testSemi() throws LexicalException {
-//		String input = ";;\n;;";
-//		Scanner scanner = new Scanner(input).scan();
-//		show(input);
-//		show(scanner);
-//		checkNext(scanner, SEMI, 0, 1, 1, 1);
-//		checkNext(scanner, SEMI, 1, 1, 1, 2);
-//		checkNext(scanner, SEMI, 3, 1, 2, 1);
-//		checkNext(scanner, SEMI, 4, 1, 2, 2);
+	@Test
+	public void testSemi() throws LexicalException {
+		String input = "/**";
+		Scanner scanner = new Scanner(input).scan();
+		show(input);
+		show(scanner);
 //		checkNextIsEOF(scanner);
-//	}
-//	
-//	@Test
-//	public void testAt() throws LexicalException {
-//		String input = "@@\n@@";
-//		Scanner scanner = new Scanner(input).scan();
-//		show(input);
-//		show(scanner);
-//		checkNext(scanner, OP_AT, 0, 1, 1, 1);
-//		checkNext(scanner, OP_AT, 1, 1, 1, 2);
-//		checkNext(scanner, OP_AT, 3, 1, 2, 1);
-//		checkNext(scanner, OP_AT, 4, 1, 2, 2);
+	}
+	
+	@Test
+	public void testAt() throws LexicalException {
+		String input = "abc 991.1";
+		Scanner scanner = new Scanner(input).scan();
+		show(input);
+		show(scanner);
 //		checkNextIsEOF(scanner);
-//	}
+	}
 	
 
 	

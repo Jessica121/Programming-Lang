@@ -601,9 +601,12 @@ public class Scanner {
 					StringBuilder sbForDot = new StringBuilder();
 					sbForDot.append(chars, startPos, pos - startPos);
 					try {
-						Float.valueOf(sbForDot.toString().trim());
-						tokens.add(new Token(Kind.FLOAT_LITERAL, startPos, pos - startPos));
-						state = State.START;
+						if(Float.valueOf(sbForDot.toString().trim()) == Float.POSITIVE_INFINITY || Float.valueOf(sbForDot.toString().trim()) == Float.NEGATIVE_INFINITY || Float.valueOf(sbForDot.toString().trim()) == Float.NaN)
+							error(pos, line(pos), posInLine(line(pos)), "-->" + sbForDot.toString() + "Invalid float value");
+						else {
+							tokens.add(new Token(Kind.FLOAT_LITERAL, startPos, pos - startPos));
+							state = State.START;
+						}
 					} catch (Exception e) {
 						error(pos, line(pos), posInLine(line(pos)), "-->" + sbForDot.toString() + "<-- Illegal char - dot with non digits / digits out range");
 					}
@@ -659,7 +662,7 @@ public class Scanner {
 										pos++;
 									break;
 								}
-								if(pos == chars.length - 1 && ch != '/') {
+								if(ch == 128 || (ch == '*' && chars[pos + 1] == 128)) {
 									error(pos, line(pos), posInLine(line(pos)), "Non closing comments");
 									break;
 								}

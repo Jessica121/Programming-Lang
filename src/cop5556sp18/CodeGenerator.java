@@ -386,88 +386,90 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 			ExpressionFunctionAppWithExpressionArg expressionFunctionAppWithExpressionArg,
 			Object arg) throws Exception {
 		expressionFunctionAppWithExpressionArg.e.visit(this, arg);
+		System.out.println(expressionFunctionAppWithExpressionArg.function);
+		System.out.println(expressionFunctionAppWithExpressionArg.e.getType());
+
 		if (expressionFunctionAppWithExpressionArg.function == Kind.KW_log) {
-			if(expressionFunctionAppWithExpressionArg.typeName == Type.INTEGER) {
+			if(expressionFunctionAppWithExpressionArg.e.getType() == Type.INTEGER) {
 				mv.visitMethodInsn(INVOKESTATIC, RuntimeFunc.className, "log", RuntimeFunc.logSig, false);
 			}
-			else if(expressionFunctionAppWithExpressionArg.typeName == Type.FLOAT) {
+			else if(expressionFunctionAppWithExpressionArg.e.getType() == Type.FLOAT) {
 				mv.visitMethodInsn(INVOKESTATIC, RuntimeFunc.className, "log2", RuntimeFunc.logSig2, false);
 			}
 		} else if(expressionFunctionAppWithExpressionArg.function == Kind.KW_abs) {
-			if(expressionFunctionAppWithExpressionArg.typeName == Type.INTEGER) {
+			if(expressionFunctionAppWithExpressionArg.e.getType() == Type.INTEGER) {
 				mv.visitMethodInsn(INVOKESTATIC, RuntimeFunc.className, "abs", RuntimeFunc.absSig, false);
 			}
-			else if(expressionFunctionAppWithExpressionArg.typeName == Type.FLOAT) {
+			else if(expressionFunctionAppWithExpressionArg.e.getType() == Type.FLOAT) {
 				mv.visitMethodInsn(INVOKESTATIC, RuntimeFunc.className, "abs2", RuntimeFunc.absSig2, false);
 			}
 		} else if(expressionFunctionAppWithExpressionArg.function == Kind.KW_sin) {
-			if(expressionFunctionAppWithExpressionArg.typeName == Type.INTEGER) {
+			if(expressionFunctionAppWithExpressionArg.e.getType() == Type.INTEGER) {
 				mv.visitMethodInsn(INVOKESTATIC, RuntimeFunc.className, "sin", RuntimeFunc.sinSig, false);
 			}
-			else if(expressionFunctionAppWithExpressionArg.typeName == Type.FLOAT) {
+			else if(expressionFunctionAppWithExpressionArg.e.getType() == Type.FLOAT) {
 				mv.visitMethodInsn(INVOKESTATIC, RuntimeFunc.className, "sin2", RuntimeFunc.sinSig2, false);
 			}
 		} else if(expressionFunctionAppWithExpressionArg.function == Kind.KW_cos) {
-			if(expressionFunctionAppWithExpressionArg.typeName == Type.INTEGER) {
+			if(expressionFunctionAppWithExpressionArg.e.getType() == Type.INTEGER) {
 				mv.visitMethodInsn(INVOKESTATIC, RuntimeFunc.className, "cos", RuntimeFunc.cosSig, false);
 			}
-			else if(expressionFunctionAppWithExpressionArg.typeName == Type.FLOAT) {
+			else if(expressionFunctionAppWithExpressionArg.e.getType() == Type.FLOAT) {
 				mv.visitMethodInsn(INVOKESTATIC, RuntimeFunc.className, "cos2", RuntimeFunc.cosSig2, false);
 			}
 		} else if(expressionFunctionAppWithExpressionArg.function == Kind.KW_atan) {
-			if(expressionFunctionAppWithExpressionArg.typeName == Type.INTEGER) {
+			if(expressionFunctionAppWithExpressionArg.e.getType() == Type.INTEGER) {
 				mv.visitMethodInsn(INVOKESTATIC, RuntimeFunc.className, "atan", RuntimeFunc.atanSig, false);
 			}
-			else if(expressionFunctionAppWithExpressionArg.typeName == Type.FLOAT) {
+			else if(expressionFunctionAppWithExpressionArg.e.getType() == Type.FLOAT) {
 				mv.visitMethodInsn(INVOKESTATIC, RuntimeFunc.className, "atan2", RuntimeFunc.atanSig2, false);
 			}
 		} else if(expressionFunctionAppWithExpressionArg.function == Kind.KW_red) {
-			if(expressionFunctionAppWithExpressionArg.typeName == Type.INTEGER) {
+			if(expressionFunctionAppWithExpressionArg.e.getType() == Type.INTEGER) {
 				mv.visitMethodInsn(INVOKESTATIC, RuntimePixelOps.className, "getRed", RuntimePixelOps.getRedSig, false);
 			}
-			else if(expressionFunctionAppWithExpressionArg.typeName == Type.FLOAT) {
+			else if(expressionFunctionAppWithExpressionArg.e.getType() == Type.FLOAT) {
 				mv.visitInsn(F2I);
 				mv.visitMethodInsn(INVOKESTATIC, RuntimePixelOps.className, "getRed", RuntimePixelOps.getRedSig, false);
 			}
 		} else if(expressionFunctionAppWithExpressionArg.function == Kind.KW_green) {
-			if(expressionFunctionAppWithExpressionArg.typeName == Type.INTEGER) {
+			if(expressionFunctionAppWithExpressionArg.e.getType() == Type.INTEGER) {
 				mv.visitMethodInsn(INVOKESTATIC, RuntimePixelOps.className, "getGreen", RuntimePixelOps.getGreenSig, false);
 			}
-			else if(expressionFunctionAppWithExpressionArg.typeName == Type.FLOAT) {
+			else if(expressionFunctionAppWithExpressionArg.e.getType() == Type.FLOAT) {
 				mv.visitInsn(F2I);
 				mv.visitMethodInsn(INVOKESTATIC, RuntimePixelOps.className, "getGreen", RuntimePixelOps.getGreenSig, false);
 			}
 		} else if(expressionFunctionAppWithExpressionArg.function == Kind.KW_blue) {
-			if(expressionFunctionAppWithExpressionArg.typeName == Type.INTEGER) {
+			if(expressionFunctionAppWithExpressionArg.e.getType() == Type.INTEGER) {
 				mv.visitMethodInsn(INVOKESTATIC, RuntimePixelOps.className, "getBlue", RuntimePixelOps.getBlueSig, false);
 			}
-			else if(expressionFunctionAppWithExpressionArg.typeName == Type.FLOAT) {
+			else if(expressionFunctionAppWithExpressionArg.e.getType() == Type.FLOAT) {
 				mv.visitInsn(F2I);
 				mv.visitMethodInsn(INVOKESTATIC, RuntimePixelOps.className, "getBlue", RuntimePixelOps.getBlueSig, false);
 			}
 		} else if(expressionFunctionAppWithExpressionArg.function == Kind.KW_alpha) {
-			if(expressionFunctionAppWithExpressionArg.typeName == Type.INTEGER) {
+			if(expressionFunctionAppWithExpressionArg.e.getType() == Type.INTEGER) {
 				mv.visitMethodInsn(INVOKESTATIC, RuntimePixelOps.className, "getAlpha", RuntimePixelOps.getAlphaSig, false);
 			}
-			else if(expressionFunctionAppWithExpressionArg.typeName == Type.FLOAT) {
+			else if(expressionFunctionAppWithExpressionArg.e.getType() == Type.FLOAT) {
 				mv.visitInsn(F2I);
 				mv.visitMethodInsn(INVOKESTATIC, RuntimePixelOps.className, "getAlpha", RuntimePixelOps.getAlphaSig, false);
 			}
 		} else if(expressionFunctionAppWithExpressionArg.function == Kind.KW_width) {
-			if(expressionFunctionAppWithExpressionArg.typeName == Type.IMAGE) {
+			if(expressionFunctionAppWithExpressionArg.e.getType() == Type.IMAGE) {
 				mv.visitMethodInsn(INVOKESTATIC, RuntimeImageSupport.className, "getWidth", RuntimeImageSupport.getWidthSig, false);
 			}
 		} else if(expressionFunctionAppWithExpressionArg.function == Kind.KW_height) {
-			if(expressionFunctionAppWithExpressionArg.typeName == Type.IMAGE) {
+			if(expressionFunctionAppWithExpressionArg.e.getType() == Type.IMAGE) {
 				mv.visitMethodInsn(INVOKESTATIC, RuntimeImageSupport.className, "getHeight", RuntimeImageSupport.getHeightSig, false);
 			}
 		} else if(expressionFunctionAppWithExpressionArg.function == Kind.KW_float) {
-			if(expressionFunctionAppWithExpressionArg.typeName == Type.INTEGER) {
-//				mv.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "parseFloat", "(Ljava/lang/Integer;)F", false);
-			    mv.visitInsn(Opcodes.I2F);
+			if(expressionFunctionAppWithExpressionArg.e.getType() == Type.INTEGER) {
+			    mv.visitInsn(I2F);
 			} 
 		} else if(expressionFunctionAppWithExpressionArg.function == Kind.KW_int) {
-			if(expressionFunctionAppWithExpressionArg.typeName == Type.FLOAT) {
+			if(expressionFunctionAppWithExpressionArg.e.getType() == Type.FLOAT) {
 				mv.visitInsn(F2I);
 			}
 		} 
@@ -484,7 +486,7 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 		
 		if(expressionFunctionAppWithPixel.name == Kind.KW_polar_a) {
 			mv.visitMethodInsn(INVOKESTATIC, RuntimeFunc.className, "polar_a", RuntimeFunc.aSig, false);
-		} else if( expressionFunctionAppWithPixel.name == Kind.KW_cart_x) {
+		} else if(expressionFunctionAppWithPixel.name == Kind.KW_cart_x) {
 			mv.visitMethodInsn(INVOKESTATIC, RuntimeFunc.className, "cart_x", RuntimeFunc.xSig, false);
 		} else if(expressionFunctionAppWithPixel.name == Kind.KW_cart_y) {
 			mv.visitMethodInsn(INVOKESTATIC, RuntimeFunc.className, "cart_y", RuntimeFunc.ySig, false);
@@ -575,20 +577,21 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 		} 
 		else if (expressionUnary.op == Kind.OP_EXCLAMATION) {
 			if (expressionUnary.expression.typeName == Type.INTEGER) {
-				mv.visitLdcInsn(0); //TODO
+				mv.visitLdcInsn(-1); 
 				mv.visitInsn(IXOR);
 			} else if (expressionUnary.expression.typeName == Type.BOOLEAN) {
-				Label startLabel = new Label();
-				Label endLabel = new Label();
-				mv.visitJumpInsn(IFEQ, endLabel);
-				mv.visitLdcInsn(0);
-				mv.visitJumpInsn(GOTO, startLabel);
-				mv.visitLabel(endLabel);
-				mv.visitLdcInsn(1);
-				mv.visitLabel(startLabel);
+//				Label startLabel = new Label();
+//				Label endLabel = new Label();
+//				mv.visitJumpInsn(IFEQ, endLabel);
+//				mv.visitLdcInsn(0);
+//				mv.visitJumpInsn(GOTO, startLabel);
+//				mv.visitLabel(endLabel);
+//				mv.visitLdcInsn(1);
+//				mv.visitLabel(startLabel);
+				mv.visitLdcInsn(1); 
+				mv.visitInsn(IXOR);
 			}
 		}
-//		CodeGenUtils.genLogTOS(GRADE, mv, expressionUnary.typeName);
 		return null;
 	}
 
@@ -844,6 +847,7 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 //				mv.visitFieldInsn(GETSTATIC, className, "x", "I");
 				//TODO check correctness
 				mv.visitMethodInsn(INVOKESTATIC, "cop5556sp18/RuntimeImageSupport", "makeFrame", RuntimeImageSupport.makeFrameSig, false);
+				mv.visitInsn(POP);
 			}
 			break;
 			default: break;
