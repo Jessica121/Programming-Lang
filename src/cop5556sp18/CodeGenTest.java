@@ -164,22 +164,69 @@ public class CodeGenTest {
 	 * The only thing it will do is append the "entering main" and "leaving main" messages to the log.
 	 * 
 	 * @throws Exception
-	 */
-	@Test
-	public void emptyProg() throws Exception {
-		String prog = "emptyProg";	
-		String input = prog + "{}";
-		byte[] bytecode = genCode(input);
-		String[] commandLineArgs = {};
-		runCode(prog, bytecode, commandLineArgs);
-		show("Log:\n "+RuntimeLog.globalLog);
-		assertEquals("entering main;leaving main;",RuntimeLog.globalLog.toString());
-	}
+//	 */
+//	@Test
+//	public void emptyProg() throws Exception {
+//		String prog = "emptyProg";	
+//		String input = prog + "{}";
+//		byte[] bytecode = genCode(input);
+//		String[] commandLineArgs = {};
+//		runCode(prog, bytecode, commandLineArgs);
+//		show("Log:\n "+RuntimeLog.globalLog);
+//		assertEquals("entering main;leaving main;",RuntimeLog.globalLog.toString());
+//	}
 	
+//	@Test
+//	public void t1() throws Exception {
+//		String prog = "writeImageToFile";
+//		String input =  prog + "{image y;\n filename f;\n input y from @ 0 ; input f from @ 1; \n show y; write y to f; show y; sleep 5000;}";
+//		byte[] bytecode = genCode(input);		
+//		String[] commandLineArgs = {"https://d2droglu4qf8st.cloudfront.net/2016/05/282829/Marbled-Hazelnut-Brownie-Cheesecake-for-a-Crowd_Large400_ID-1680086.jpg", "result.jpg"};		
+//		runCode(prog, bytecode, commandLineArgs);
+//		show("Log:\n"+RuntimeLog.globalLog);
+//		//assertEquals("entering main;-13100275;leaving main;",RuntimeLog.globalLog.toString());
+//	}
+	
+//	@Test
+//	public void t2() throws Exception {
+//		String prog = "writeImageToFile";
+//		String input =  prog + "{image y[300,400];\n input y from @ 0 ;\n show y; sleep 5000;}";
+//		byte[] bytecode = genCode(input);		
+//		String[] commandLineArgs = {"https://d2droglu4qf8st.cloudfront.net/2016/05/282829/Marbled-Hazelnut-Brownie-Cheesecake-for-a-Crowd_Large400_ID-1680086.jpg"};		
+//		runCode(prog, bytecode, commandLineArgs);
+//		show("Log:\n"+RuntimeLog.globalLog);
+//		//assertEquals("entering main;-13100275;leaving main;",RuntimeLog.globalLog.toString());
+//	}
+	
+//	@Test
+//	public void t3() throws Exception {
+//		String prog = "prog";
+//		String input =  prog + "{image y[20,20]; show y[12,14]; y[12,14] := 1234567890; show y[12,14];}";
+//		byte[] bytecode = genCode(input);		
+//		String[] commandLineArgs = {};
+//		runCode(prog, bytecode, commandLineArgs);
+//		show("Log:\n"+RuntimeLog.globalLog);
+//		//assertEquals("entering main;-13100275;leaving main;",RuntimeLog.globalLog.toString());
+//	}
+//	
+//	@Test
+//	public void t4() throws Exception {
+//		String prog = "prog";
+//		String input =  prog + "{image y[20,20]; input y from @ 0; show y[12,20]; y[12,20] := 1234567890; show y[12,20];}";
+//		byte[] bytecode = genCode(input);		
+//		String[] commandLineArgs = {"https://d2droglu4qf8st.cloudfront.net/2016/05/282829/Marbled-Hazelnut-Brownie-Cheesecake-for-a-Crowd_Large400_ID-1680086.jpg"};		
+//		runCode(prog, bytecode, commandLineArgs);
+//		show("Log:\n"+RuntimeLog.globalLog);
+//		//assertEquals("entering main;-13100275;leaving main;",RuntimeLog.globalLog.toString());
+//	}
+//	
 	@Test
-	public void testRandom() throws Exception {
-		String prog = "writeImageToFile";
-		String input =  prog + "{image y[300,400];\n input y from @ 0 ;\n show y;}";
+	public void t5() throws Exception {
+		String prog = "writeTransparentImage";
+		String input =  prog + "{ image im[256,256]; \nfilename f; \ninput f from @0; "
+				+ "\nint x;\n int y; \nx := 0; \ny := 0; \nwhile (x < width(im)){ \n y := 0; "
+				+ "while (y < height(im)){\nim[x,y] := <<15,255,0,0>>; \nint z; z := im[x,y];"
+				+ "y := y + 1; \n};\nx := x + 1;};\nwrite im to f;}";
 		byte[] bytecode = genCode(input);		
 		String[] commandLineArgs = {"https://d2droglu4qf8st.cloudfront.net/2016/05/282829/Marbled-Hazelnut-Brownie-Cheesecake-for-a-Crowd_Large400_ID-1680086.jpg"};		
 		runCode(prog, bytecode, commandLineArgs);
@@ -188,11 +235,85 @@ public class CodeGenTest {
 	}
 	
 	@Test
+	public void t6() throws Exception {
+		String prog = "blockScope";
+		String input =  prog + "{if(true){ int x; }; int x; x := 5; show x;}";
+		byte[] bytecode = genCode(input);		
+		String[] commandLineArgs = {};
+		runCode(prog, bytecode, commandLineArgs);
+		show("Log:\n"+RuntimeLog.globalLog);
+		//assertEquals("entering main;-13100275;leaving main;",RuntimeLog.globalLog.toString());
+	}
+	
+//	@Test
+//	public void t7() throws Exception {
+//		String prog = "writeImageToFile";
+//		String input =  prog + "{int a; a := cart_x[100.6, 7.2]; show a; a := cart_y[100.0,6.6]; show a;}";
+//		byte[] bytecode = genCode(input);	
+//		String[] commandLineArgs = {};
+//		runCode(prog, bytecode, commandLineArgs);
+//		show("Log:\n"+RuntimeLog.globalLog);
+//		//assertEquals("entering main;-13100275;leaving main;",RuntimeLog.globalLog.toString());
+//	}
+//	
+//	@Test
+//	public void t8() throws Exception {
+//		String prog = "prog";
+//		String input =  prog + "{float a; a := polar_a[100, 7]; show a;}";
+//		byte[] bytecode = genCode(input);		
+//		String[] commandLineArgs = {};
+//		runCode(prog, bytecode, commandLineArgs);
+//		show("Log:\n"+RuntimeLog.globalLog);
+//		//assertEquals("entering main;-13100275;leaving main;",RuntimeLog.globalLog.toString());
+//	}
+	
+//	@Test
+//	public void t9() throws Exception {
+//		String prog = "prog";
+//		String input =  prog + "{float a; a := polar_r[100, 7]; show a;}";
+//		byte[] bytecode = genCode(input);		
+//		String[] commandLineArgs = {};
+//		runCode(prog, bytecode, commandLineArgs);
+//		show("Log:\n"+RuntimeLog.globalLog);
+//		//assertEquals("entering main;-13100275;leaving main;",RuntimeLog.globalLog.toString());
+//	}
+	
+	@Test
+	public void t10() throws Exception {
+		String prog = "lhssample";
+		String input =  prog + "{ image im[512,256]; int x;\n int y; \nx := 0; \ny := 0; "
+				+ "\nwhile (x < width(im)){ \n y := 0; while (y < height(im)){\nalpha(im[x,y]) := 255;"
+				+ "\nred(im[x,y]) := 0;\ngreen(im[x,y]) := x+y;\nblue(im[x,y]) := 0; \ny := y + 1; \n};"
+				+ "\nx := x + 1;};\nshow im;\n}";
+		byte[] bytecode = genCode(input);		
+		String[] commandLineArgs = {};
+		runCode(prog, bytecode, commandLineArgs);
+		show("Log:\n"+RuntimeLog.globalLog);
+		//assertEquals("entering main;-13100275;leaving main;",RuntimeLog.globalLog.toString());
+	}
+	
+	@Test
+	public void testRandom() throws Exception {
+		String prog = "writeModifiedImage";
+		String input =  prog + "{ image im; \ninput im from @0; \nfilename f; \ninput f from @1; "
+				+ "\nint x;\n int y; \nx := 0; \ny := 0; \nwhile (x < width(im)){ "
+				+ "\n y := 0; while (y < height(im)){\nim[x,y] := <<15,255,0,0>>; "
+				+ "\nint z; z := im[x,y];y := y + 1; \n};\nx := x + 1;};\nwrite im to f;\n}";
+		byte[] bytecode = genCode(input);		
+		String[] commandLineArgs = {"https://d2droglu4qf8st.cloudfront.net/2016/05/282829/Marbled-Hazelnut-Brownie-Cheesecake-for-a-Crowd_Large400_ID-1680086.jpg","new.jpg"};		
+		runCode(prog, bytecode, commandLineArgs);
+		show("Log:\n"+RuntimeLog.globalLog);
+		//assertEquals("entering main;-13100275;leaving main;",RuntimeLog.globalLog.toString());
+	}
+	
+	@Test
 	public void test1() throws Exception {
 		String prog = "prog";
-		String input =  prog + "{float a; a := polar_a[100, 7]; show a;}";
+		String input =  prog + "{ image im[512,256]; \ninput im from @0; int x;\n int y; \nx := 0; \ny := 0; \n"
+				+ "while (x < width(im)){ \n y := 0; while (y < height(im)){\nim[x,y] := <<255,0,x+y,0>>; \n"
+				+ "y := y + 1; \n};\nx := x + 1;};\nshow im;\n sleep 5000;}";
 		byte[] bytecode = genCode(input);		
-		String[] commandLineArgs = {};		
+		String[] commandLineArgs = {"https://d2droglu4qf8st.cloudfront.net/2016/05/282829/Marbled-Hazelnut-Brownie-Cheesecake-for-a-Crowd_Large400_ID-1680086.jpg","new.jpg"};		
 		runCode(prog, bytecode, commandLineArgs);
 		show("Log:\n"+RuntimeLog.globalLog);
 		//assertEquals("entering main;-13100275;leaving main;",RuntimeLog.globalLog.toString());
@@ -201,7 +322,30 @@ public class CodeGenTest {
 	@Test
 	public void test2() throws Exception {
 		String prog = "prog";
-		String input = "{image b[512,256]; show width(b); show height(b);\nimage c; show width(c); show height(c);} ";
+		String input = "{ image im[256,256]; \nfilename f; \ninput f from @0; \nint x;\n int y; \nx := 0; \n"
+				+ "y := 0; \nwhile (x < width(im)){ \n y := 0; while (y < height(im)){\nim[x,y] := <<255,255,0,0>>;"
+				+ " \nint z; z := im[x,y];y := y + 1; \n};\nx := x + 1;};\nwrite im to f;\n}";
+		byte[] bytecode = genCode(input);		
+		String[] commandLineArgs = {};		
+		runCode(prog, bytecode, commandLineArgs);
+		show("Log:\n"+RuntimeLog.globalLog);
+		//assertEquals("entering main;-13100275;leaving main;",RuntimeLog.globalLog.toString());
+	}
+	@Test
+	public void t12() throws Exception {
+		String prog = "prog";
+		String input =  prog + "{image y[1000,1000]; image copy[1000,1000]; input y from @ 0 ; show y; copy := y; show copy;} ";
+		byte[] bytecode = genCode(input);		
+		String[] commandLineArgs = {"https://d2droglu4qf8st.cloudfront.net/2016/05/282829/Marbled-Hazelnut-Brownie-Cheesecake-for-a-Crowd_Large400_ID-1680086.jpg","new.jpg"};		
+		runCode(prog, bytecode, commandLineArgs);
+		show("Log:\n"+RuntimeLog.globalLog);
+		//assertEquals("entering main;-13100275;leaving main;",RuntimeLog.globalLog.toString());
+	}
+	
+	@Test
+	public void t13() throws Exception {
+		String prog = "prog";
+		String input = "{image b[512,256]; show width(b); show height(b);\nimage c; show width(c); show height(c);}";
 		byte[] bytecode = genCode(input);		
 		String[] commandLineArgs = {};		
 		runCode(prog, bytecode, commandLineArgs);

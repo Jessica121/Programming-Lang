@@ -50,6 +50,7 @@ public class TypeChecker implements ASTVisitor {
 		Kind kind = declaration.type;
 		Type type = Types.getType(kind);
 		declaration.typeName = type;
+		
 		if(!symbolTable.insert(declaration.name, declaration))
 			throw new SemanticException(declaration.firstToken, "Duplicate indent declaration");
 		Expression e0 = null, e1 = null;
@@ -257,10 +258,12 @@ public class TypeChecker implements ASTVisitor {
 		LHS lhs = (LHS) statementAssign.lhs.visit(this, null);
 		Expression expr = (Expression) statementAssign.e.visit(this, null);
 //		Type lhsType = null;
-		System.out.println(lhs.typeName + " " + expr.getTypeName());
-		if(lhs.typeName != expr.getTypeName()) {
+//		System.out.println(lhs.typeName + " " + expr.getType());
+		
+		if(lhs.typeName != expr.getType()) {
 			throw new SemanticException(statementAssign.firstToken, "Type mismatch: statementAssign.lhs.typeName != expr.typeName");
 		}
+		
 		return statementAssign;
 	}
 

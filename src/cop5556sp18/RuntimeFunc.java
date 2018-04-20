@@ -72,27 +72,27 @@ public class RuntimeFunc {
 		return (float) l;
 	}
 	
-	public static String aSig = "(II)I";
-	public static int polar_a(int x, int y) {
-		double  a=  (int) Math.toDegrees( Math.atan2(y, x) );
-		return (int) a;
+	public static String aSig = "(II)F";
+	public static float polar_a(int x, int y) {
+		double  a = Math.toDegrees(Math.atan2(y, x));
+		return (float) a;
 	}
 
-	public static String rSig = "(II)I";
-	public static int polar_r(int x, int y) {
-		double  r = (int) Math.hypot(x,y);
-		return (int)r;
+	public static String rSig = "(II)F";
+	public static float polar_r(int x, int y) {
+		double  r = Math.hypot(x,y);
+		return (float) r;
 	}
 	
-	public static String xSig = "(II)I";
-	public static int cart_x(int r, int theta) {
-	     double y = r * Math.cos(Math.toRadians(theta));
+	public static String xSig = "(FF)I";
+	public static int cart_x(float r, float theta) {
+	     double y = r * Math.cos(theta);
 	     return (int) y;
 	}
 	
-	public static String ySig = "(II)I";
-	public static int cart_y(int r, int theta) {
-		double y =  r * Math.sin(Math.toRadians(theta));
+	public static String ySig = "(FF)I";
+	public static int cart_y(float r, float theta) {
+		double y =  r * Math.sin(theta);
 		return (int) y;
 	}
 }
