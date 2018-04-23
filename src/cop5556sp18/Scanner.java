@@ -15,11 +15,6 @@ package cop5556sp18;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-//import java.util.HashMap;
-
-//import cop5556sp18.Scanner.Kind;
-//import cop5556sp18.Scanner.State;
-//import cop5556sp18.Scanner.Token;
 
 public class Scanner {
 
@@ -557,7 +552,7 @@ public class Scanner {
 				}
 				break;
 				
-				case IS_DIGIT://TODO
+				case IS_DIGIT:
 					if (pos < chars.length - 1 && chars[pos] == '.') {
 						pos++;
 						state = State.HAVE_DOT;
@@ -586,18 +581,14 @@ public class Scanner {
 					}
 				break;
 				
-				// TODO
 				case HAVE_DOT:
-//					int afterDotLength = 1;
 					while (pos < chars.length - 1) {
 						if(!Character.isDigit(chars[pos])) {
 							break;
 						} else {
 							pos++;
-//							afterDotLength++;
 						}
 					}
-//					System.out.println("after dot len ->" + pos + ", start->" + startPos);
 					StringBuilder sbForDot = new StringBuilder();
 					sbForDot.append(chars, startPos, pos - startPos);
 					try {
@@ -682,7 +673,6 @@ public class Scanner {
 						str.append(chars[pos]);
 						pos++;
 					}
-//					System.out.println(str.toString());
 					state = State.START;
 					strLen = str.length();
 					String keyword = str.toString();

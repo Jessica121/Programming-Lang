@@ -50,7 +50,6 @@ public class TypeChecker implements ASTVisitor {
 		Kind kind = declaration.type;
 		Type type = Types.getType(kind);
 		declaration.typeName = type;
-		
 		if(!symbolTable.insert(declaration.name, declaration))
 			throw new SemanticException(declaration.firstToken, "Duplicate indent declaration");
 		Expression e0 = null, e1 = null;
@@ -257,8 +256,6 @@ public class TypeChecker implements ASTVisitor {
 	public Object visitStatementAssign(StatementAssign statementAssign, Object arg) throws Exception {
 		LHS lhs = (LHS) statementAssign.lhs.visit(this, null);
 		Expression expr = (Expression) statementAssign.e.visit(this, null);
-//		Type lhsType = null;
-//		System.out.println(lhs.typeName + " " + expr.getType());
 		
 		if(lhs.typeName != expr.getType()) {
 			throw new SemanticException(statementAssign.firstToken, "Type mismatch: statementAssign.lhs.typeName != expr.typeName");
@@ -287,8 +284,9 @@ public class TypeChecker implements ASTVisitor {
 		} else {
 			throw new SemanticException(expressionPixel.firstToken, "Illegal type at visit ident chain");
 		}
-		if(expressionPixel.dec.typeName != Type.IMAGE) 			
-			throw new SemanticException(expressionPixel.firstToken, "Illegal type at visit ident chain");
+		if(expressionPixel.dec.typeName == Type.IMAGE) 
+			expressionPixel.pixelSelector.visit(this, null);
+		else throw new SemanticException(expressionPixel.firstToken, "Illegal type at visit ident chain");
 		expressionPixel.typeName = Type.INTEGER;
 		return expressionPixel;
 	}

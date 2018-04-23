@@ -5,8 +5,8 @@ public class RuntimeFunc {
 	public static String className = "cop5556sp18/RuntimeFunc";
 
 	public static String absSig = "(I)I";
-	public static int abs(int arg0) {
-		return Math.abs(arg0);
+	public static int abs(int arg) {
+		return Math.abs(arg);
 	}
 	
 	public static String absSig2 = "(F)F";
@@ -74,7 +74,7 @@ public class RuntimeFunc {
 	
 	public static String aSig = "(II)F";
 	public static float polar_a(int x, int y) {
-		double  a = Math.toDegrees(Math.atan2(y, x));
+		double  a = Math.atan2(y, x);
 		return (float) a;
 	}
 

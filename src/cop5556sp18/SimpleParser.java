@@ -91,17 +91,17 @@ public class SimpleParser {
 					pixelSelector();
 				} 
 			} else {
-				throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+				throw new SyntaxException(t,"Parser found error at" + t.kind);
 			}
 		}else if (getTypeSets("Type").contains(t.kind)) {
 			type();
 			if (isKind(IDENTIFIER)) {
 				consume();
 			}else {
-				throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+				throw new SyntaxException(t,"Parser found error at" + t.kind);
 			}
 		} else {
-			throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+			throw new SyntaxException(t, "Parser found error at" + t.kind);
 		}
 	}
 	
@@ -123,7 +123,7 @@ public class SimpleParser {
 		}else if (getTypeSets("StatementSleep").contains(t.kind)) {
 			sleepStatement();
 		}else {
-			throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+			throw new SyntaxException(t, "Parser found error at" + t.kind);
 		}
 	}
 	
@@ -140,7 +140,7 @@ public class SimpleParser {
 		}else if (isKind(KW_filename)) {
 			consume();
 		}else {
-			throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+			throw new SyntaxException(t, "Parser found error at" + t.kind);
 		}
 	}
 
@@ -169,17 +169,17 @@ public class SimpleParser {
 						if (getTypeSets("Expression").contains(t.kind)) {
 							expression();
 						}else {
-							throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+							throw new SyntaxException(t, "Parser found error at" + t.kind);
 						}
 					} else {
-						throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+						throw new SyntaxException(t, "Parser found error at" + t.kind);
 					}
 				}else {
-					throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+					throw new SyntaxException(t, "Parser found error at" + t.kind);
 				}
 			}
 		} else {
-			throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+			throw new SyntaxException(t, "Parser found error at" + t.kind);
 		}
 	}
 	
@@ -192,12 +192,12 @@ public class SimpleParser {
 				if (getTypeSets("AndExpression").contains(t.kind)) {
 					andExpression();
 				}else {
-					throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+					throw new SyntaxException(t, "Parser found error at" + t.kind);
 				}
 			}
 			
 		} else {
-			throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+			throw new SyntaxException(t, "Parser found error at" + t.kind);
 		}	
 	}
 	
@@ -210,12 +210,12 @@ public class SimpleParser {
 				if (getTypeSets("EqExpression").contains(t.kind)) {
 					andExpression();
 				}else {
-					throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+					throw new SyntaxException(t, "Parser found error at" + t.kind);
 				}
 			}
 			
 		} else {
-			throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+			throw new SyntaxException(t, "Parser found error at" + t.kind);
 		}
 	}
 
@@ -228,11 +228,11 @@ public class SimpleParser {
 				if (getTypeSets("RelExpression").contains(t.kind)) {
 					relExpression();
 				}else {
-					throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+					throw new SyntaxException(t, "Parser found error at" + t.kind);
 				}
 			}
 		} else {
-			throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+			throw new SyntaxException(t, "Parser found error at" + t.kind);
 		}	
 	}
 	
@@ -245,11 +245,11 @@ public class SimpleParser {
 				if (getTypeSets("AddExpression").contains(t.kind)) {
 					addExpression();
 				}else {
-					throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+					throw new SyntaxException(t, "Parser found error at" + t.kind);
 				}
 			}
 		} else {
-			throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+			throw new SyntaxException(t, "Parser found error at" + t.kind);
 		}
 	}
 	
@@ -262,11 +262,11 @@ public class SimpleParser {
 				if (getTypeSets("MultExpression").contains(t.kind)) {
 					multExpression();
 				}else {
-					throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+					throw new SyntaxException(t, "Parser found error at" + t.kind);
 				}
 			}
 		} else {
-			throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+			throw new SyntaxException(t, "Parser found error at" + t.kind);
 		}
 	}
 	
@@ -279,11 +279,11 @@ public class SimpleParser {
 				if (getTypeSets("PowerExpression").contains(t.kind)) {
 					powerExpression();
 				}else {
-					throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+					throw new SyntaxException(t, "Parser found error at" + t.kind);
 				}
 			}
 		} else {
-			throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+			throw new SyntaxException(t, "Parser found error at" + t.kind);
 		}
 	}
 	
@@ -296,11 +296,11 @@ public class SimpleParser {
 				if (getTypeSets("PowerExpression").contains(t.kind)) {
 					powerExpression();
 				} else {
-					throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+					throw new SyntaxException(t, "Parser found error at" + t.kind);
 				}
 			} 
 		} else {
-			throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+			throw new SyntaxException(t, "Parser found error at" + t.kind);
 		}
 	}
 //	
@@ -311,10 +311,10 @@ public class SimpleParser {
 //			if (getTypeSets("PixelSelector").contains(t.kind)) {
 //				pixelSelector();
 //			}else {
-//				throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+//				throw new SyntaxException(t, "Parser found error at" + t.kind);
 //			}
 //		} else {
-//			throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+//			throw new SyntaxException(t, "Parser found error at" + t.kind);
 //		}
 //	}
 	
@@ -332,19 +332,19 @@ public class SimpleParser {
 							if (isKind(RSQUARE)) {
 								consume();
 							}else {
-								throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+								throw new SyntaxException(t,"Parser found error at" + t.kind);
 							}
 						}else {
-							throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+							throw new SyntaxException(t,"Parser found error at" + t.kind);
 						}
 					} else {
-						throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+						throw new SyntaxException(t,"Parser found error at" + t.kind);
 					}
 				} else {
-						throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+						throw new SyntaxException(t,"Parser found error at" + t.kind);
 				}
 		}else {
-			throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+			throw new SyntaxException(t,"Parser found error at" + t.kind);
 		}
 	}
 
@@ -371,15 +371,15 @@ public class SimpleParser {
 										expression();
 										if (isKind(RPIXEL)) {
 											consume();
-										} else throw new SyntaxException(t, "Error while parsing program at " + t.kind);
-									} else throw new SyntaxException(t, "Error while parsing program at " + t.kind);
-								} else throw new SyntaxException(t, "Error while parsing program at " + t.kind);
-							} else throw new SyntaxException(t, "Error while parsing program at " + t.kind);
-						} else throw new SyntaxException(t, "Error while parsing program at " + t.kind);
-					} else throw new SyntaxException(t, "Error while parsing program at " + t.kind);
-				} else throw new SyntaxException(t, "Error while parsing program at " + t.kind);
-			} else throw new SyntaxException(t, "Error while parsing program at " + t.kind);
-		} else throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+										} else throw new SyntaxException(t, "Parser found error at" + t.kind);
+									} else throw new SyntaxException(t, "Parser found error at" + t.kind);
+								} else throw new SyntaxException(t, "Parser found error at" + t.kind);
+							} else throw new SyntaxException(t, "Parser found error at" + t.kind);
+						} else throw new SyntaxException(t, "Parser found error at" + t.kind);
+					} else throw new SyntaxException(t, "Parser found error at" + t.kind);
+				} else throw new SyntaxException(t, "Parser found error at" + t.kind);
+			} else throw new SyntaxException(t, "Parser found error at" + t.kind);
+		} else throw new SyntaxException(t, "Parser found error at" + t.kind);
 	}
 						
 	
@@ -394,7 +394,7 @@ public class SimpleParser {
 		}else if (isKind(KW_alpha)) {
 			consume();
 		}else {
-			throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+			throw new SyntaxException(t, "Parser found error at" + t.kind);
 		}
 	}
 	
@@ -407,13 +407,13 @@ public class SimpleParser {
 				if (getTypeSets("Expression").contains(t.kind)) {
 					expression();
 				}else {
-					throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+					throw new SyntaxException(t,"Parser found error at" + t.kind);
 				}
 			}else {
-				throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+				throw new SyntaxException(t,"Parser found error at" + t.kind);
 			}
 		} else {
-			throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+			throw new SyntaxException(t,"Parser found error at" + t.kind);
 		}
 	}
 	
@@ -430,19 +430,19 @@ public class SimpleParser {
 						if (getTypeSets("Block").contains(t.kind)) {
 							block();
 						}else {
-							throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+							throw new SyntaxException(t, "Parser found error at" + t.kind);
 						}
 					}else {
-						throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+						throw new SyntaxException(t, "Parser found error at" + t.kind);
 					}
 				}else {
-					throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+					throw new SyntaxException(t,"Parser found error at" + t.kind);
 				}
 			}else {
-				throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+				throw new SyntaxException(t,"Parser found error at" + t.kind);
 			}
 		} else {
-			throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+			throw new SyntaxException(t,"Parser found error at" + t.kind);
 		}
 	}
 	
@@ -459,19 +459,19 @@ public class SimpleParser {
 						if (getTypeSets("Block").contains(t.kind)) {
 							block();
 						}else {
-							throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+							throw new SyntaxException(t, "Parser found error at" + t.kind);
 						}
 					}else {
-						throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+						throw new SyntaxException(t, "Parser found error at" + t.kind);
 					}
 				}else {
-					throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+					throw new SyntaxException(t,"Parser found error at" + t.kind);
 				}
 			}else {
-				throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+				throw new SyntaxException(t,"Parser found error at" + t.kind);
 			}
 		} else {
-			throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+			throw new SyntaxException(t,"Parser found error at" + t.kind);
 		}
 	}
 	
@@ -486,16 +486,16 @@ public class SimpleParser {
 					if (isKind(IDENTIFIER)) {
 						consume();
 					}else {
-						throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+						throw new SyntaxException(t, "Parser found error at" + t.kind);
 					}
 				}else {
-					throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+					throw new SyntaxException(t,"Parser found error at" + t.kind);
 				}
 			}else {
-				throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+				throw new SyntaxException(t,"Parser found error at" + t.kind);
 			}
 		} else {
-			throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+			throw new SyntaxException(t,"Parser found error at" + t.kind);
 		}
 	}
 	
@@ -512,19 +512,19 @@ public class SimpleParser {
 						if (getTypeSets("Expression").contains(t.kind)) {
 							expression();
 						}else {
-							throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+							throw new SyntaxException(t, "Parser found error at" + t.kind);
 						}
 					}else {
-						throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+						throw new SyntaxException(t, "Parser found error at" + t.kind);
 					}
 				}else {
-					throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+					throw new SyntaxException(t,"Parser found error at" + t.kind);
 				}
 			}else {
-				throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+				throw new SyntaxException(t,"Parser found error at" + t.kind);
 			}
 		} else {
-			throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+			throw new SyntaxException(t,"Parser found error at" + t.kind);
 		}
 	}
 	
@@ -535,10 +535,10 @@ public class SimpleParser {
 			if (getTypeSets("Expression").contains(t.kind)) {
 				expression();
 			}else {
-				throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+				throw new SyntaxException(t, "Parser found error at" + t.kind);
 			}
 		} else {
-			throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+			throw new SyntaxException(t,"Parser found error at" + t.kind);
 		}
 	}
 	
@@ -549,10 +549,10 @@ public class SimpleParser {
 			if (getTypeSets("Expression").contains(t.kind)) {
 				expression();
 			}else {
-				throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+				throw new SyntaxException(t, "Parser found error at" + t.kind);
 			}
 		} else {
-			throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+			throw new SyntaxException(t,"Parser found error at" + t.kind);
 		}
 	}
 	
@@ -574,19 +574,19 @@ public class SimpleParser {
 						if (isKind(RPAREN)) {
 							consume();
 						} else {
-							throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+							throw new SyntaxException(t,"Parser found error at" + t.kind);
 						}
 					} else {
-						throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+						throw new SyntaxException(t,"Parser found error at" + t.kind);
 					}
 				} else {
-					throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+					throw new SyntaxException(t,"Parser found error at" + t.kind);
 				}
 			}else {
-				throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+				throw new SyntaxException(t,"Parser found error at" + t.kind);
 			}
 		} else {
-			throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+			throw new SyntaxException(t,"Parser found error at" + t.kind);
 		}
 	}
 
@@ -609,10 +609,10 @@ public class SimpleParser {
 					if(isKind(RPAREN)) {
 						consume();
 					} else {
-						throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+						throw new SyntaxException(t,"Parser found error at" + t.kind);
 					}
 				} else {
-					throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+					throw new SyntaxException(t,"Parser found error at" + t.kind);
 				}
 		} else if (getTypeSets("FunctionApplication").contains(t.kind)) {
 			functionApplication();
@@ -626,7 +626,7 @@ public class SimpleParser {
 		}  else if (getTypeSets("PixelConstructor").contains(t.kind)) {
 			pixelConstructor();
 		} else {
-			throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+			throw new SyntaxException(t,"Parser found error at" + t.kind);
 		}
 	}
 	
@@ -641,18 +641,18 @@ public class SimpleParser {
 					if (isKind(RPAREN)) {
 						consume();
 					}else {
-						throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+						throw new SyntaxException(t,"Parser found error at" + t.kind);
 					}
 				}else {
-					throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+					throw new SyntaxException(t,"Parser found error at" + t.kind);
 				}
 			}else if (getTypeSets("PixelSelector").contains(t.kind)) {
 				pixelSelector();
 			} else {
-				throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+				throw new SyntaxException(t,"Parser found error at" + t.kind);
 			}
 		} else {
-			throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+			throw new SyntaxException(t,"Parser found error at" + t.kind);
 		}
 	}
 	
@@ -665,7 +665,7 @@ public class SimpleParser {
 		}else if (isKind(KW_default_width)) {
 			consume();
 		} else {
-			throw new SyntaxException(t, "Error while parsing program at " + t.kind);
+			throw new SyntaxException(t, "Parser found error at" + t.kind);
 		}
 	}
 		
@@ -678,13 +678,13 @@ public class SimpleParser {
 				if (getTypeSets("Expression").contains(t.kind)) {
 					expression();
 				}else {
-					throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+					throw new SyntaxException(t,"Parser found error at" + t.kind);
 				}
 			} else {
-				throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+				throw new SyntaxException(t,"Parser found error at" + t.kind);
 			}
 		} else {
-				throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+				throw new SyntaxException(t,"Parser found error at" + t.kind);
 		}
 	}
 	
@@ -748,7 +748,7 @@ public class SimpleParser {
 				}
 				break;
 				default:
-					throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+					throw new SyntaxException(t,"Parser found error at" + t.kind);
 			}
 		}
 
@@ -762,12 +762,12 @@ public class SimpleParser {
 			if (getTypeSets("UnaryExpression").contains(t.kind)) {
 				unaryExpression();
 			}else {
-				throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+				throw new SyntaxException(t,"Parser found error at" + t.kind);
 			}
 		} else if (getTypeSets("Primary").contains(t.kind)) {
 			primary();
 		} else {
-			throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+			throw new SyntaxException(t,"Parser found error at" + t.kind);
 		}
 	}
 
@@ -778,19 +778,19 @@ public class SimpleParser {
 			if (getTypeSets("UnaryExpression").contains(t.kind)) {
 				unaryExpression();
 			} else {
-					throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+					throw new SyntaxException(t,"Parser found error at" + t.kind);
 			}
 		}else if (isKind(OP_MINUS)) {
 			consume();
 			if (getTypeSets("UnaryExpression").contains(t.kind)) {
 				unaryExpression();
 			} else {
-					throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+					throw new SyntaxException(t,"Parser found error at" + t.kind);
 			}
 		} else if (getTypeSets("UnaryExpressionNotPlusMinus").contains(t.kind)) {
 			unaryExpressionNotPlusMinus();
 		} else {
-				throw new SyntaxException(t,"Error while parsing program at " + t.kind);
+				throw new SyntaxException(t,"Parser found error at" + t.kind);
 		}
 		
 	}

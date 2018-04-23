@@ -125,7 +125,7 @@ public class ParserTest {
 	
 	@Test
 	 public void testExpression6() throws LexicalException, SyntaxException {
-	  String input = "a**b**c*d/e%f+g*d-d*e<a+b>c+d<=e+f>=g+h==c!=d&a&b";
+	String input = "prog{image b[512,256]; show width(b); show height(b);\nimage c; show width(c); show height(c);}";
 	  show(input);
 	  Scanner scanner = new Scanner(input).scan(); 
 	  show(scanner); 

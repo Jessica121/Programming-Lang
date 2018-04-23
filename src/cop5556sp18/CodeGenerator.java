@@ -64,7 +64,6 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 	static String fieldType;
 	static Object initValue;
 	int slot;
-//	Label beginBlock, endBlock;
 
 	static final int Z = 255;
 	List<Declaration> allDec = new ArrayList<>();
@@ -107,27 +106,6 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 
 	@Override
 	public Object visitBlock(Block block, Object arg) throws Exception {
-//		for (ASTNode node : block.decsOrStatements) {
-//			if(node instanceof Declaration) {
-//				((Declaration) node).setSlotNum(slot++); 
-//				// take care of the labels
-//				// label, pass the block to args
-////				allDec.add(declaration);
-//				if(node.typeName == Type.IMAGE) {
-//					if(((Declaration) node).width != null && ((Declaration) node).height != null) {
-//					/* visit the Expressions to generate code to evaluate them and leave their value on the stack. 
-//					 * Then generate code to instantiate an image (invoke RuntimeImageSupport.makeImage)*/
-//						((Declaration) node).width.visit(this, arg);
-//						((Declaration) node).height.visit(this, arg);
-//					} else if(((Declaration) node).width == null && ((Declaration) node).height == null) {
-//						mv.visitLdcInsn(defaultWidth); // put on top of stack
-//						mv.visitLdcInsn(defaultHeight);
-//					}
-//					mv.visitMethodInsn(INVOKESTATIC, "cop5556sp18/RuntimeImageSupport", "makeImage", RuntimeImageSupport.makeImageSig, false);
-//					mv.visitVarInsn(ASTORE, ((Declaration) node).getSlotNum());
-//				}
-//			}
-//		}
 			Label startBlock = new Label();
 			Label endBlock = new Label();
 			mv.visitLabel(startBlock);
@@ -144,26 +122,6 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 				node.visit(this, null);
 			}
 			mv.visitLabel(endBlock);
-//			if (arg != null && (int) arg == 2) {
-//				// visit the local variables in the inner blocks
-//				for(ASTNode decOrStatement : block.decsOrStatements) {
-//					if(decOrStatement instanceof Declaration) {
-//						//Visit local variables\
-//						Declaration dec = (Declaration) decOrStatement;
-//						mv.visitLocalVariable(dec.name, Types.getJVMType(dec.getTypeName()), null, startBlock, endBlock, dec.getSlotNum());
-//						System.out.println("visit var IN BLOCK -> " + ((Declaration)decOrStatement).typeName + " " + Types.getJVMType(dec.getTypeName()));
-////						mv.visitLocalVariable(((Declaration)decOrStatement).name, localType, null, mainStart, mainEnd, ((Declaration)decOrStatement).getSlotNum());	
-//					}else if(decOrStatement.getClass() == StatementIf.class){
-//						// Get the block 
-//						// Iterate over block to get declarations
-//						//Visit local variables
-//					}else if(decOrStatement.getClass() == StatementWhile.class){
-//						// Get the block 
-//						// Iterate over block to get declarations
-//						//Visit local variables
-//					}
-//				}
-//			}
 			return null;
 	}
 
@@ -178,19 +136,9 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 	@Override
 	public Object visitDeclaration(Declaration declaration, Object arg)
 			throws Exception {
-		// add an Arraylist<>()  for declaration
-//		// take care of the labels
-//		// label, pass the block to args
-//		allDec.add(declaration);
-		
-//		declaration.typeName
 		
 		declaration.setSlotNum(slot); 
 		slot = slot + 1;
-//		System.out.println("slot num -> " + declaration.getSlotNum());
-//				// take care of the labels
-//				// label, pass the block to args
-////				allDec.add(declaration);
 				if(declaration.typeName == Type.IMAGE) {
 					if(declaration.width != null && declaration.height != null) {
 					/* visit the Expressions to generate code to evaluate them and leave their value on the stack. 
@@ -284,7 +232,7 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 			} else if(t2 == Type.FLOAT && t1 == Type.FLOAT) {
 				mv.visitInsn(FREM);
 			}
-		} else if (expressionBinary.op == Kind.OP_AND) { //TODO till now :)
+		} else if (expressionBinary.op == Kind.OP_AND) { 
 			mv.visitInsn(IAND);	
 		} else if (expressionBinary.op == Kind.OP_OR) {
 			mv.visitInsn(IOR);
@@ -386,8 +334,6 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 			ExpressionFunctionAppWithExpressionArg expressionFunctionAppWithExpressionArg,
 			Object arg) throws Exception {
 		expressionFunctionAppWithExpressionArg.e.visit(this, arg);
-		System.out.println(expressionFunctionAppWithExpressionArg.function);
-		System.out.println(expressionFunctionAppWithExpressionArg.e.getType());
 
 		if (expressionFunctionAppWithExpressionArg.function == Kind.KW_log) {
 			if(expressionFunctionAppWithExpressionArg.e.getType() == Type.INTEGER) {
@@ -501,7 +447,6 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 	public Object visitExpressionIdent(ExpressionIdent expressionIdent,
 			Object arg) throws Exception {
 		Declaration dec = expressionIdent.dec;
-		System.out.println(expressionIdent.name + "dec is -> " + dec);
 			if (dec.getTypeName() == Type.INTEGER || dec.getTypeName() == Type.BOOLEAN) {
 				mv.visitVarInsn(ILOAD, dec.getSlotNum());
 			} else if (dec.getTypeName() == Type.FLOAT) {
@@ -524,8 +469,7 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 	@Override
 	public Object visitExpressionPixel(ExpressionPixel expressionPixel,
 			Object arg) throws Exception {
-//		mv.visitFieldInsn(GETSTATIC, classNamsdfe, expressionPixel.name, RuntimeImageSupport.ImageDesc);
-		mv.visitVarInsn(ALOAD, expressionPixel.dec.getSlotNum()); // TODO
+		mv.visitVarInsn(ALOAD, expressionPixel.dec.getSlotNum());
 		if(expressionPixel.pixelSelector != null) {
 			expressionPixel.pixelSelector.visit(this, arg);
 			mv.visitMethodInsn(INVOKESTATIC, RuntimeImageSupport.className, "getPixel", RuntimeImageSupport.getPixelSig,false);
@@ -556,7 +500,6 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 		}else if (expressionPredefinedName.name == Kind.KW_Z) {
 			mv.visitLdcInsn(Z);
 		}
-//		else mv.visitVarInsn(ILOAD, kindInd.get(expressionPredefinedName.kind));
 		return null;
 	}
 
@@ -585,12 +528,8 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 	@Override
 	public Object visitLHSIdent(LHSIdent lhsIdent, Object arg) throws Exception {
 		/* If the type is image, the value on top of the stack is actually a reference. Instead of copying the reference, a copy 
-		 * of the image should be created and the reference to the copy stored. Use RuntimeImageSupport.deepCopy to copy the image.*/
-//		CodeGenUtils.genPrintTOS(GRADE, mv, lhsIdent.typeName);
-		// TODO
+		 * of the image should be created and the refAerence to the copy stored. Use RuntimeImageSupport.deepCopy to copy the image.*/
 		if(lhsIdent.dec.typeName == Type.IMAGE) {
-//			mv.visitVarInsn(ILOAD, 1);
-//		    mv.visitVarInsn(ILOAD, 2);
 			mv.visitMethodInsn(INVOKESTATIC, RuntimeImageSupport.className, "deepCopy", RuntimeImageSupport.deepCopySig, false);
 			mv.visitVarInsn(ASTORE, lhsIdent.dec.getSlotNum());
 		} else if(lhsIdent.dec.typeName == Type.INTEGER) {
@@ -609,16 +548,8 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 	@Override
 	public Object visitLHSPixel(LHSPixel lhsPixel, Object arg)
 			throws Exception {
-//		if (lhsPixel.pixelSelector != null) //  // load x and y 
-//			visitPixelSelector(lhsPixel.pixelSelector, arg); //TODO
 	    mv.visitVarInsn(ALOAD, lhsPixel.dec.getSlotNum()); // load image
-		lhsPixel.pixelSelector.visit(this, arg);
-//		mv.visitVarInsn(ISTORE, lhsPixel.dec.getSlotNum());
-//		mv.visitVarInsn(ISTORE, lhsPixel.dec.getSlotNum());
-//		mv.visitFieldInsn(PUTSTATIC, className, lhsPixel.pixelSelector.ex...name, "Z");
-//		mv.visitFieldInsn(PUTSTATIC, className, lhsPixel.e1.name, "Z");
-//		mv.visitFieldInsn(GETSTATIC, className, lhsPixel.name, RuntimeImageSupport.ImageDesc);
-//		CodeGenUtils.genLogTOS(DEVEL, mv, lhsPixel.typeName);
+		if (lhsPixel.pixelSelector != null) lhsPixel.pixelSelector.visit(this, arg); // load x and y 
 	    mv.visitMethodInsn(INVOKESTATIC, RuntimeImageSupport.className, "setPixel", RuntimeImageSupport.setPixelSig, false);
 	    return null;
 	}
@@ -626,8 +557,8 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 	@Override
 	public Object visitLHSSample(LHSSample lhsSample, Object arg)
 			throws Exception {
-		if (lhsSample.pixelSelector != null) lhsSample.pixelSelector.visit(this, arg); // load x and y 
 		mv.visitVarInsn(ALOAD, lhsSample.dec.getSlotNum()); // load image
+		if (lhsSample.pixelSelector != null) lhsSample.pixelSelector.visit(this, arg); // load x and y 
 		if(lhsSample.color == Kind.KW_alpha) {
 			mv.visitInsn(ICONST_0);
 		} else if(lhsSample.color == Kind.KW_red) {
@@ -645,13 +576,22 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 	public Object visitPixelSelector(PixelSelector pixelSelector, Object arg)
 			throws Exception {
 		pixelSelector.ex.visit(this, arg);
+//		  if (pixelSelector.ex.typeName.equals(Type.FLOAT)) {
+//		   mv.visitInsn(F2D);
+//		   mv.visitMethodInsn(INVOKESTATIC, "java/lang/Math", "cos", "(D)D", false);
+//		   mv.visitInsn(D2I);
+//		  }
 		pixelSelector.ey.visit(this, arg);
-		return pixelSelector;
+//		  if (pixelSelector.ey.typeName.equals(Type.FLOAT)) {
+//		   mv.visitInsn(F2D);
+//		   mv.visitMethodInsn(INVOKESTATIC, "java/lang/Math", "sin", "(D)D", false);
+//		   mv.visitInsn(D2I);
+//		  }
+		  return null;
 	}
 
 	@Override
 	public Object visitProgram(Program program, Object arg) throws Exception {
-		// TODO refactor and extend as necessary
 		cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
 		// cw = new ClassWriter(0); //If the call to mv.visitMaxs(1, 1) crashes,
 		// it is
@@ -695,25 +635,8 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 				//Visit local variables\
 				Declaration dec = (Declaration) decOrStatement;
 				mv.visitLocalVariable(dec.name, Types.getJVMType(dec.getTypeName()), null, mainStart, mainEnd, dec.getSlotNum());
-//				System.out.println("yo2345oo -> " + ((Declaration)decOrStatement).typeName + " " + Types.getJVMType(dec.getTypeName()));
-//				mv.visitLocalVariable(((Declaration)decOrStatement).name, localType, null, mainStart, mainEnd, ((Declaration)decOrStatement).getSlotNum());	
-			}else if(decOrStatement.getClass() == StatementIf.class){
-				// Get the block 
-				// Iterate over block to get declarations
-				//Visit local variables
-			}else if(decOrStatement.getClass() == StatementWhile.class){
-				// Get the block 
-				// Iterate over block to get declarations
-				//Visit local variables
 			}
 		}
-		
-//		mv.visitLocalVariable("INTEGER", "I", null, mainStart, mainEnd, 1);
-//		mv.visitLocalVariable("FLOAT", "F", null, mainStart, mainEnd, 2);
-//		mv.visitLocalVariable("BOOLEAN", "Z", null, mainStart, mainEnd, 3);
-//		mv.visitLocalVariable("IMAGE", "Ljava/awt/image/BufferedImage;", null, mainStart, mainEnd, 4);
-//		mv.visitLocalVariable("FILE", "Ljava/lang/String;", null, mainStart, mainEnd, 5);
-		
 		
 		// labels 
 		// Because we use ClassWriter.COMPUTE_FRAMES as a parameter in the
@@ -749,14 +672,13 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 		Label after = new Label();
 		statementIf.guard.visit(this, arg);
 		mv.visitJumpInsn(IFEQ, after);
-		statementIf.b.visit(this, null);
+		statementIf.b.visit(this, arg);
 		mv.visitLabel(after);
 		return null;
 	}
 
 	@Override
 	public Object visitStatementInput(StatementInput statementInput, Object arg) throws Exception {
-		// TODO
 		mv.visitVarInsn(ALOAD, 0);// ARGS arrays
 		statementInput.e.visit(this, arg);
 		mv.visitInsn(AALOAD); // load the arg array and index.
@@ -830,8 +752,6 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 			// it.
 			case IMAGE : {
 				CodeGenUtils.genLogTOS(GRADE, mv, type);
-//				mv.visitFieldInsn(GETSTATIC, className, "x", "I");
-				//TODO check correctness
 				mv.visitMethodInsn(INVOKESTATIC, "cop5556sp18/RuntimeImageSupport", "makeFrame", RuntimeImageSupport.makeFrameSig, false);
 				mv.visitInsn(POP);
 			}
@@ -858,7 +778,7 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 		Label body = new Label();
 		mv.visitJumpInsn(GOTO, guard);
 		mv.visitLabel(body);
-		statementWhile.b.visit(this, null); // TODO 
+		statementWhile.b.visit(this, arg); 
 		mv.visitLabel(guard);
 		statementWhile.guard.visit(this, arg);
 		mv.visitJumpInsn(IFNE, body);
@@ -870,9 +790,7 @@ public class CodeGenerator implements ASTVisitor, Opcodes {
 			throws Exception {
 		mv.visitVarInsn(ALOAD, statementWrite.srcDec.slotNum);
 		mv.visitVarInsn(ALOAD, statementWrite.destDec.slotNum);
-//		mv.visitVarInsn(ALOAD, statementWrite.srcDec.getSlotNum()); 
 		mv.visitMethodInsn(INVOKESTATIC, RuntimeImageSupport.className, "write", RuntimeImageSupport.writeSig, false);
-//		mv.visitVarInsn(ASTORE, lhsIdent.dec.getSlotNum()); // write the img to the file ?
 		return null;
 	}
 
